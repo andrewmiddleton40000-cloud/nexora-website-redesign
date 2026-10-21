@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /><title>Form registration</title></head>
+  <body>
+    <!-- Netlify Forms build-time detection only. Fields must match src/components/ContactForm.tsx -->
+    <form name="enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="enquiry" />
+      <input name="name" />
+      <input name="company" />
+      <input name="email" type="email" />
+      <input name="phone" />
+      <select name="service"><option value="">-</option></select>
+      <select name="budget"><option value="">-</option></select>
+      <select name="timeline"><option value="">-</option></select>
+      <input name="website" />
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
+  </body>
+</html>
