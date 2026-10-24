@@ -31,6 +31,11 @@ export const Route = createRootRoute({
       ],
       scripts: [
         {
+          async: true,
+          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8737940076208275',
+          crossOrigin: 'anonymous',
+        },
+        {
           type: 'application/ld+json',
           children: JSON.stringify({
             '@context': 'https://schema.org',

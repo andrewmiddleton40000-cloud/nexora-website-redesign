@@ -54,7 +54,7 @@ function ServicesPage() {
           </p>
           <nav aria-label="Service categories" className="md:col-span-4 md:col-start-9">
             <ul className="border-t border-line text-sm">
-              {[{ id: 'packages', title: 'Website packages' }, ...categories, { id: 'faq', title: 'Pricing questions' }].map((c) => (
+              [{ id: 'packages', title: 'Website packages' }, ...categories, { id: 'faq', title: 'Pricing questions' }].map((c) => (
                 <li key={c.id} className="border-b border-line">
                   <a href={`#${c.id}`} className="flex justify-between py-2.5 hover:text-forest">
                     {c.title} <span aria-hidden="true">↓</span>
@@ -63,6 +63,31 @@ function ServicesPage() {
               ))}
             </ul>
           </nav>
+        </div>
+      </section>
+
+      <section className="border-t border-line bg-white py-16 md:py-20">
+        <div className="wrap">
+          <div className="mb-8">
+            <p className="eyebrow">Sponsored</p>
+          </div>
+
+          <div className="rounded-2xl border border-line bg-paper p-4 md:p-6">
+            <ins
+              className="adsbygoogle"
+              style={{ display: 'block' }}
+              data-ad-client="ca-pub-8737940076208275"
+              data-ad-slot="YOUR_SLOT_ID"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+            />
+
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `(adsbygoogle = window.adsbygoogle || []).push({});`,
+              }}
+            />
+          </div>
         </div>
       </section>
 

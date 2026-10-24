@@ -64,6 +64,31 @@ function Home() {
         </div>
       </section>
 
+      <section className="border-t border-line bg-white py-16 md:py-20">
+        <div className="wrap">
+          <div className="mb-8">
+            <p className="eyebrow">Sponsored</p>
+          </div>
+
+          <div className="rounded-2xl border border-line bg-paper p-4 md:p-6">
+            <ins
+              className="adsbygoogle"
+              style={{ display: 'block' }}
+              data-ad-client="ca-pub-8737940076208275"
+              data-ad-slot="YOUR_SLOT_ID"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+            />
+
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `(adsbygoogle = window.adsbygoogle || []).push({});`,
+              }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Positioning */}
       <section className="border-y border-line bg-white" aria-labelledby="approach-title">
         <div className="wrap grid gap-10 py-20 md:grid-cols-12 md:py-28">
