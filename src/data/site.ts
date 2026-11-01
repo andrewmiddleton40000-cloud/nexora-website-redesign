@@ -4,11 +4,13 @@
 export const site = {
   name: 'Nexora Technologies',
   shortName: 'Nexora',
-  url: 'https://nexora-website-redesign.netlify.app',
-  description:
-    'Nexora Technologies builds professional websites, e-commerce platforms, web applications, AI solutions and business automation for Nigerian and international businesses — with transparent naira pricing.',
-  positioning:
-    'We help businesses work smarter, serve customers better, and grow with technology that solves real problems.',
+  url: 'https://www.nextech.name.ng',
+
+description:
+  'Nexora Technologies helps businesses grow through digital solutions and empowers individuals through practical technology education, digital products and innovation.',
+
+positioning:
+  'We build digital solutions, develop practical skills and create opportunities for businesses and individuals around the world.',
   // Add the verified business email here, e.g. 'hello@yourdomain.com'. Leave null to hide it.
   email: null as string | null,
   phone: { display: '0902 077 4803', tel: '+2349020774803' },
@@ -20,6 +22,7 @@ export const site = {
 export const nav = [
   { label: 'Home', to: '/' },
   { label: 'Services', to: '/services' },
+  { label: 'Academy', to: '/academy' },
   { label: 'Portfolio', to: '/work' },
   { label: 'About', to: '/about' },
   { label: 'Insights', to: '/insights' },
