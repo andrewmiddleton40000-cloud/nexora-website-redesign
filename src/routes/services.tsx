@@ -53,8 +53,7 @@ function ServicesPage() {
             proposal is tailored to your goals and the functionality you need.
           </p>
           <nav aria-label="Service categories" className="md:col-span-4 md:col-start-9">
-            <ul className="border-t border-line text-sm">
-              [{ id: 'packages', title: 'Website packages' }, ...categories, { id: 'faq', title: 'Pricing questions' }].map((c) => (
+            <ul className="border-t border-line text-sm">{[{ id: 'packages', title: 'Website packages' }, ...categories, { id: 'faq', title: 'Pricing questions' }].map((c) => (
                 <li key={c.id} className="border-b border-line">
                   <a href={`#${c.id}`} className="flex justify-between py-2.5 hover:text-forest">
                     {c.title} <span aria-hidden="true">↓</span>
