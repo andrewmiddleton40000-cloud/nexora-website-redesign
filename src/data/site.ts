@@ -22,6 +22,7 @@ positioning:
 export const nav = [
   { label: 'Home', to: '/' },
   { label: 'Services', to: '/services' },
+  { label: 'Academy', to: '/academy' },
   { label: 'Portfolio', to: '/work' },
   { label: 'About', to: '/about' },
   { label: 'Insights', to: '/insights' },
