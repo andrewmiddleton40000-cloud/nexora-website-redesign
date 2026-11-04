@@ -16,5 +16,31 @@
       <textarea name="message"></textarea>
       <input name="bot-field" />
     </form>
+    <!-- Fields must match src/components/academy/SchoolEnquiryForm.tsx -->
+    <form name="school-partnership" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="school-partnership" />
+      <input name="school_name" />
+      <input name="school_location" />
+      <select name="school_type"><option value="">-</option></select>
+      <input name="contact_name" />
+      <input name="position" />
+      <input name="email" type="email" />
+      <input name="phone" />
+      <select name="student_population"><option value="">-</option></select>
+      <select name="year_group"><option value="">-</option></select>
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
+    <!-- Fields must match src/routes/academy.contact.tsx -->
+    <form name="academy-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="academy-contact" />
+      <input name="name" />
+      <select name="role"><option value="">-</option></select>
+      <input name="email" type="email" />
+      <input name="phone" />
+      <select name="topic"><option value="">-</option></select>
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
   </body>
 </html>
