@@ -27,6 +27,7 @@ export function SiteHeader() {
   }, [open])
 
   return (
+    <>
     <header
       className={`sticky top-0 z-40 transition-colors duration-300 ${
         scrolled || open ? 'bg-paper/95 backdrop-blur-sm border-b border-line' : 'bg-paper border-b border-transparent'
@@ -74,24 +75,26 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
+    </header>
 
+      {/* Rendered outside <header>: the header's backdrop-filter would otherwise become the
+          containing block for this fixed panel, collapsing it and clipping the lower links. */}
       <div
         id="mobile-nav"
         hidden={!open}
-        className="lg:hidden fixed inset-x-0 top-[4.5rem] bottom-0 bg-paper border-t border-line overflow-y-auto"
+        className="lg:hidden fixed inset-x-0 top-[4.5rem] bottom-0 z-40 bg-paper border-t border-line overflow-y-auto"
       >
         <nav aria-label="Mobile" className="wrap flex min-h-full flex-col pt-6 pb-10">
           <ul className="divide-y divide-line border-y border-line">
-            {nav.map((item, i) => (
+            {nav.map((item) => (
               <li key={item.to}>
                 <Link
                   to={item.to}
-                  className="flex items-baseline justify-between py-5 text-3xl display"
+                  className="flex items-baseline py-5 text-3xl display"
                   activeOptions={{ exact: item.to === '/' }}
                   activeProps={{ className: 'text-forest', 'aria-current': 'page' }}
                 >
                   {item.label}
-                  <span className="text-xs text-muted tracking-normal">0{i + 1}</span>
                 </Link>
               </li>
             ))}
@@ -104,6 +107,6 @@ export function SiteHeader() {
           </a>
         </nav>
       </div>
-    </header>
+    </>
   )
 }
