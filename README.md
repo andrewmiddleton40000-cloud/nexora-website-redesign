@@ -9,6 +9,7 @@ The marketing website for Nexora Technologies, a digital solutions partner for s
 - `/work`: the portfolio, loaded from `src/data/projects.ts`
 - `/about`: company introduction and working principles
 - `/contact`: consultation and enquiry form, handled by Netlify Forms
+- `/academy/*`: Nexora Digital Academy, a database-backed learning platform with courses, lessons, payments, school partnerships and administration (see AGENTS.md)
 
 ## Technology
 

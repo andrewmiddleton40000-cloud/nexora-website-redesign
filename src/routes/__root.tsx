@@ -2,6 +2,7 @@ import { HeadContent, Link, Scripts, createRootRoute } from '@tanstack/react-rou
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { WhatsAppFloat } from '@/components/WhatsApp'
+import { AuthCallback } from '@/components/academy/AuthCallback'
 import { site } from '@/data/site'
 import { seo } from '@/lib/seo'
 
@@ -69,6 +70,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <main id="main">{children}</main>
         <SiteFooter />
         <WhatsAppFloat />
+        <AuthCallback />
         <Scripts />
       </body>
     </html>

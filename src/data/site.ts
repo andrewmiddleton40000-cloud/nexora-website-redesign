@@ -23,6 +23,7 @@ export const nav = [
   { label: 'Portfolio', to: '/work' },
   { label: 'About', to: '/about' },
   { label: 'Insights', to: '/insights' },
+  { label: 'Academy', to: '/academy' },
   { label: 'Contact', to: '/contact' },
 ] as const
 

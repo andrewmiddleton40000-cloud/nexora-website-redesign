@@ -39,7 +39,7 @@ export function SiteHeader() {
         <Logo />
 
         <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-7 text-[0.95rem]">
+          <ul className="flex items-center gap-5 text-[0.95rem] xl:gap-7">
             {nav.map((item) => (
               <li key={item.to}>
                 <Link
