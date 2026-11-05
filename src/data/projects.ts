@@ -40,4 +40,21 @@ export type Project = {
   year?: string
 }
 
-export const projects: Project[] = []
+export const projects: Project[] = [
+  {
+    slug: 'pepper-and-puff',
+    name: 'Pepper & Puff',
+    industry: 'Food & catering',
+    category: 'websites',
+    kind: 'client',
+    services: ['Website Design & Development', 'Digital Menu', 'WhatsApp Ordering'],
+    problem:
+      'A home-style food and bakes business needed one place where customers could browse its platters, breakfast and lunch spreads, birthday packages and small chops, then order without back-and-forth messages.',
+    approach:
+      'Nexora designed and built the official Pepper & Puff digital menu: a warm, photo-led site with menu categories and packages, an estimated order total, and a basket that sends the finished order straight to WhatsApp. A shareable menu link and QR code make it easy to pass around.',
+    image: 'work/pepper-and-puff.jpg',
+    imageAlt: 'Homepage of the Pepper & Puff digital menu, showing the headline “Made for your people” beside a photo of a party platter',
+    url: 'https://pepperandpuff.com.ng',
+    year: '2026',
+  },
+]
