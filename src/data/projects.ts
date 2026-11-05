@@ -57,4 +57,36 @@ export const projects: Project[] = [
     url: 'https://pepperandpuff.com.ng',
     year: '2026',
   },
+  {
+    slug: 'mj-aesthetics',
+    name: 'MJ Aesthetics',
+    industry: 'Beauty & creative services',
+    category: 'websites',
+    kind: 'client',
+    services: ['Website Design & Development'],
+    problem:
+      'A beauty and creative studio in Dagenham, Essex, offering photography, makeup artistry, lash extensions, podcast production and event decoration, needed one website that presents all five services and turns visitors into bookings.',
+    approach:
+      'Nexora designed and built a dark, gold-accented website with a page for each service, a portfolio of the studio’s own work, an about page, and clear “Book now” and enquiry routes throughout.',
+    image: 'work/mj-aesthetics.jpg',
+    imageAlt: 'Homepage of the MJ Aesthetics website, with the headline “Beauty & Creative Reimagined” over a close-up of manicured nails',
+    url: 'https://www.mjasthestics.co.uk',
+    year: '2026',
+  },
+  {
+    slug: 'nexora-website',
+    name: 'Nexora Technologies website',
+    industry: 'Technology services',
+    category: 'websites',
+    kind: 'internal',
+    services: ['Website Design & Development', 'Web Application', 'Online Learning Platform'],
+    problem:
+      'Nexora needed its own website to explain its services with published starting prices, take project enquiries, and run the Nexora Digital Academy.',
+    approach:
+      'Nexora designed and built the site itself: service and pricing pages, an enquiry form, and the Academy, with a course catalogue, learner accounts, lessons, progress tracking, certificates and a staff admin panel.',
+    image: 'work/nexora-website.jpg',
+    imageAlt: 'Homepage of the Nexora Technologies website, with the headline “Better digital systems. Built around your business.”',
+    url: 'https://www.nextech.name.ng',
+    year: '2026',
+  },
 ]
