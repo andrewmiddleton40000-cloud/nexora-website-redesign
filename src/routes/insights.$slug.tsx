@@ -49,7 +49,7 @@ function ArticlePage() {
             </Link>
           </div>
           <div className="md:col-span-8">
-            <p className="eyebrow rise">
+            <p className="eyebrow eyebrow-mark rise">
               {a.topic} · {formatDate(a.published)} · {a.readingMinutes} min read
             </p>
             <h1 className="display rise rise-2 mt-6 text-[2.6rem] md:text-6xl">{a.title}</h1>

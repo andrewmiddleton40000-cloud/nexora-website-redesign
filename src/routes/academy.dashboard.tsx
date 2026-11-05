@@ -41,7 +41,7 @@ function Dashboard() {
         <div className="wrap flex flex-col gap-6 py-12 md:flex-row md:items-end md:justify-between md:py-16">
           <div>
             <p className="eyebrow">My dashboard</p>
-            <h1 className="display mt-4 text-5xl md:text-6xl">Welcome, <span className="serif text-forest">{firstName}.</span></h1>
+            <h1 className="display mt-4 text-5xl md:text-6xl">Welcome, <span className="serif text-gradient pr-1">{firstName}.</span></h1>
             <p className="mt-3 text-muted">{active ? `You are enrolled in ${active.course.title}.` : 'Choose a course below to get started.'}</p>
           </div>
           <div className="flex flex-wrap gap-3">

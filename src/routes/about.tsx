@@ -19,9 +19,9 @@ function AboutPage() {
   return (
     <>
       <section className="wrap pt-16 pb-20 md:pt-24 md:pb-28">
-        <p className="eyebrow rise">About Nexora</p>
+        <p className="eyebrow eyebrow-mark rise">About Nexora</p>
         <h1 className="display rise rise-2 mt-6 max-w-5xl text-[2.9rem] md:text-7xl lg:text-[5.5rem]">
-          Your business has goals. <span className="serif text-forest">Our job is to help technology support them.</span>
+          Your business has goals. <span className="serif text-gradient pr-1">Our job is to help technology support them.</span>
         </h1>
       </section>
 
@@ -29,7 +29,7 @@ function AboutPage() {
         <div className="wrap grid gap-12 py-20 md:grid-cols-12 md:py-28">
           <p className="eyebrow eyebrow-mark md:col-span-3 md:pt-2">Our mission</p>
           <div className="md:col-span-8 space-y-6 text-xl leading-relaxed text-ink-soft">
-            <p className="text-2xl md:text-3xl leading-snug tracking-[-0.02em] text-ink">“{site.positioning}”</p>
+            <p className="relative border-l-4 border-signal pl-6 text-2xl md:text-3xl leading-snug tracking-[-0.02em] text-ink">“{site.positioning}”</p>
             <p>
               Our mission is to help businesses use technology effectively — to present themselves credibly, sell and serve
               customers online, and remove the manual work that slows teams down. We work with business owners,
@@ -45,7 +45,8 @@ function AboutPage() {
       </section>
 
       <section className="grid md:grid-cols-2">
-        <div className="aspect-[4/3] overflow-hidden bg-paper-deep md:aspect-auto">
+        <div className="relative aspect-[4/3] overflow-hidden bg-paper-deep md:aspect-auto">
+          <span className="absolute inset-0 z-10 bg-[linear-gradient(140deg,rgb(31_75_58/0.45),transparent_55%,rgb(200_224_90/0.25))] mix-blend-multiply" aria-hidden="true" />
           <img
             src={img('hospitality.jpg', 1200)}
             srcSet={imgSet('hospitality.jpg', [640, 960, 1280, 1408])}
@@ -56,7 +57,7 @@ function AboutPage() {
           />
         </div>
         <div className="px-5 py-20 md:px-14 md:py-28">
-          <p className="eyebrow">Who we work with</p>
+          <p className="eyebrow eyebrow-mark">Who we work with</p>
           <p className="mt-6 text-lg leading-relaxed text-ink-soft max-w-md">
             Established and growing businesses, particularly in Nigeria and other emerging markets, that are ready to
             operate more efficiently and present themselves better online.
@@ -72,13 +73,13 @@ function AboutPage() {
           <div className="md:col-span-4">
             <p className="eyebrow eyebrow-mark">Capabilities</p>
             <h2 id="capabilities-title" className="display mt-6 text-[2.6rem] md:text-5xl">
-              What we <span className="serif">design and build.</span>
+              What we <span className="serif text-gradient pr-1">design and build.</span>
             </h2>
           </div>
           <ol className="border-t border-ink md:col-span-8">
             {categories.map((c) => (
               <li key={c.id} className="grid gap-3 border-b border-line py-7 sm:grid-cols-[3rem_1fr]">
-                <span className="pt-3" aria-hidden="true"><span className="dot-mark" /></span>
+                <span className="pt-1" aria-hidden="true"><span className="orb orb-forest !h-8 !w-8" /></span>
                 <div>
                   <Link to="/services" hash={c.id} className="text-2xl font-medium tracking-[-0.02em] hover:text-forest">
                     {c.title}
@@ -96,7 +97,7 @@ function AboutPage() {
           <SectionHead
             tone="dark"
             label="Our approach"
-            title={<>How we <span className="serif text-signal">work with you.</span></>}
+            title={<>How we <span className="serif text-gradient-signal pr-1">work with you.</span></>}
           />
           <div className="mt-16">
             <Principles />
@@ -112,7 +113,7 @@ function AboutPage() {
           <p className="eyebrow eyebrow-mark md:col-span-3 md:pt-3">Our commitment</p>
           <div className="md:col-span-9">
             <h2 id="commitment-title" className="display text-[2.4rem] md:text-5xl max-w-3xl">
-              Honest advice, clear pricing, <span className="serif text-forest">and work you can rely on.</span>
+              Honest advice, clear pricing, <span className="serif text-gradient pr-1">and work you can rely on.</span>
             </h2>
             <ul className="mt-10 grid gap-x-10 border-t border-line md:grid-cols-3">
               {[

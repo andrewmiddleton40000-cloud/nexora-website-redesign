@@ -179,7 +179,7 @@ function CoursePage() {
             <div className="grid gap-8 md:grid-cols-12">
               <p className="eyebrow eyebrow-mark md:col-span-4">Curriculum</p>
               <h2 className="display text-4xl md:col-span-8 md:text-6xl">
-                Week by week, <span className="serif text-forest">session by session.</span>
+                Week by week, <span className="serif text-gradient pr-1">session by session.</span>
               </h2>
             </div>
             <p className="mt-10 text-sm text-muted">
@@ -280,7 +280,7 @@ function CoursePage() {
         <div className="md:col-span-5">
           <p className="eyebrow eyebrow-mark">Completion</p>
           <h2 className="display mt-5 text-4xl md:text-5xl">
-            What it takes to <span className="serif text-forest">complete.</span>
+            What it takes to <span className="serif text-gradient pr-1">complete.</span>
           </h2>
           <ol className="mt-8 space-y-4 border-t border-ink pt-6">
             {completionRequirements.map((r, i) => (
@@ -317,7 +317,7 @@ function CoursePage() {
           <div className="md:col-span-4">
             <p className="eyebrow eyebrow-mark">Questions</p>
             <h2 className="display mt-5 text-4xl md:text-5xl">
-              Frequently <span className="serif text-forest">asked.</span>
+              Frequently <span className="serif text-gradient pr-1">asked.</span>
             </h2>
           </div>
           <div className="border-t border-ink md:col-span-8">

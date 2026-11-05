@@ -21,9 +21,9 @@ function WorkPage() {
       <section className="wrap pt-16 pb-16 md:pt-24 md:pb-24">
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-8">
-            <p className="eyebrow rise">Portfolio</p>
+            <p className="eyebrow eyebrow-mark rise">Portfolio</p>
             <h1 className="display rise rise-2 mt-6 text-[3rem] md:text-7xl lg:text-[5.75rem]">
-              Selected work, <span className="serif text-forest">shown honestly.</span>
+              Selected work, <span className="serif text-gradient pr-1">shown honestly.</span>
             </h1>
           </div>
           <div className="rise rise-3 md:col-span-4 md:self-end">
@@ -32,7 +32,14 @@ function WorkPage() {
               where it can be verified — the outcome. Internal and demonstration projects are labelled as such.
             </p>
             {industries.length > 0 && (
-              <p className="mt-6 text-sm text-ink-soft">{industries.join(' / ')}</p>
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {industries.map((i) => (
+                  <li key={i} className="chip !py-1.5 !text-sm">
+                    <span className="h-1.5 w-1.5 rounded-full bg-forest" aria-hidden="true" />
+                    {i}
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
         </div>

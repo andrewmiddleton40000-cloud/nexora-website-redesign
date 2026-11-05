@@ -2,6 +2,7 @@ import { HeadContent, Link, Scripts, createRootRoute } from '@tanstack/react-rou
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { WhatsAppFloat } from '@/components/WhatsApp'
+import { Reveal } from '@/components/Reveal'
 import { AuthCallback } from '@/components/academy/AuthCallback'
 import { site } from '@/data/site'
 import { seo } from '@/lib/seo'
@@ -70,6 +71,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <main id="main">{children}</main>
         <SiteFooter />
         <WhatsAppFloat />
+        <Reveal />
         <AuthCallback />
         <Scripts />
       </body>
@@ -80,8 +82,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 function NotFound() {
   return (
     <section className="wrap py-32 md:py-44">
-      <p className="eyebrow">Error 404</p>
-      <h1 className="display mt-6 text-5xl md:text-7xl max-w-3xl">
+      <p className="eyebrow eyebrow-mark">Error 404</p>
+      <p aria-hidden="true" className="display text-gradient mt-4 text-[8rem] leading-none md:text-[12rem]">404</p>
+      <h1 className="display mt-2 text-5xl md:text-7xl max-w-3xl">
         This page isn’t here. <span className="serif">Let’s get you back on track.</span>
       </h1>
       <div className="mt-10 flex flex-wrap gap-3">

@@ -43,9 +43,9 @@ function ContactPage() {
       <section className="wrap pt-16 pb-20 md:pt-24 md:pb-28">
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-8">
-            <p className="eyebrow rise">Contact</p>
+            <p className="eyebrow eyebrow-mark rise">Contact</p>
             <h1 className="display rise rise-2 mt-6 text-[3rem] md:text-7xl lg:text-[5.5rem]">
-              Let’s talk about <span className="serif text-forest">your business.</span>
+              Let’s talk about <span className="serif text-gradient pr-1">your business.</span>
             </h1>
           </div>
           <p className="rise rise-3 text-lg leading-relaxed text-ink-soft md:col-span-4 md:self-end">
@@ -53,9 +53,9 @@ function ContactPage() {
           </p>
         </div>
 
-        <ul className="mt-16 grid border-t border-ink md:grid-cols-3">
+        <ul className="mt-16 grid gap-5 md:grid-cols-3">
           {methods.map((m) => (
-            <li key={m.label} className="flex flex-col border-b border-line py-8 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0">
+            <li key={m.label} className="card flex flex-col p-7 md:p-8">
               <p className="eyebrow">{m.label}</p>
               <p className="mt-4 text-2xl font-medium tabular-nums tracking-[-0.02em]">{m.value}</p>
               <p className="mt-3 flex-1 leading-relaxed text-muted">{m.note}</p>
@@ -69,7 +69,7 @@ function ContactPage() {
               </a>
             </li>
           ))}
-          <li className="flex flex-col border-b border-line bg-forest p-8 text-paper">
+          <li className="card card-forest flex flex-col p-7 md:p-8">
             <p className="eyebrow !text-paper/60">Request a proposal</p>
             <p className="mt-4 text-2xl font-medium tracking-[-0.02em]">Have a defined project?</p>
             <p className="mt-3 flex-1 leading-relaxed text-paper/75">
@@ -90,7 +90,7 @@ function ContactPage() {
       <section className="border-t border-line bg-white">
         <div className="wrap grid gap-12 py-20 md:grid-cols-12 md:py-28">
           <div className="md:col-span-5">
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-paper-deep">
+            <div className="photo-frame"><div className="aspect-[4/3] overflow-hidden rounded-2xl bg-paper-deep">
               <img
                 src={img('office.jpg', 900)}
                 srcSet={imgSet('office.jpg', [480, 768, 960])}
@@ -99,10 +99,10 @@ function ContactPage() {
                 loading="lazy"
                 className="h-full w-full object-cover"
               />
-            </div>
+            </div></div>
           </div>
           <div className="md:col-span-6 md:col-start-7 md:self-center">
-            <p className="eyebrow">What happens next</p>
+            <p className="eyebrow eyebrow-mark">What happens next</p>
             <h2 className="display mt-6 text-4xl md:text-5xl">
               A clear conversation, <span className="serif">then a written proposal.</span>
             </h2>

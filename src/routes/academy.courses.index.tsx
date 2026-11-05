@@ -61,7 +61,7 @@ function Catalogue() {
         eyebrow="Course catalogue"
         title={
           <>
-            Find your course, <span className="serif text-forest">build real skills.</span>
+            Find your course, <span className="serif text-gradient pr-1">build real skills.</span>
           </>
         }
         intro="Search by topic or skill, or browse by subject and level. Each level builds on the one before it, and every course is enrolled and paid for separately."
@@ -124,7 +124,7 @@ function Catalogue() {
               )}
             </div>
             {results.length ? (
-              <ul className="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-3">
+              <ul className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                 {results.map((c) => (
                   <CourseCard key={c.slug} c={c} />
                 ))}

@@ -67,7 +67,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <p aria-hidden="true" className="display mt-24 select-none text-[19vw] leading-[0.8] text-paper/[0.07] md:text-[13.5rem]">
+        <p aria-hidden="true" className="display mt-24 select-none wordmark text-[19vw] leading-[0.8] md:text-[13.5rem]">
           Nexora
         </p>
 

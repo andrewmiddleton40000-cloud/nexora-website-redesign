@@ -365,3 +365,321 @@
     }
   }
 }
+
+/* ------------------------------------------------------------------
+   Bold layer: colour, texture, glow and motion across the whole site.
+   ------------------------------------------------------------------ */
+@layer components {
+  /* Fine film grain over everything, so flat paper and ink feel tactile. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Header: a thin brand gradient strip along the top. */
+  header.sticky::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-forest) 0%, #3f8a5f 45%, var(--color-signal) 100%);
+  }
+
+  /* First section of every page: a soft colour wash and a faint grid behind the headline. */
+  main > section:first-of-type:not(.bg-ink):not(.bg-forest) {
+    position: relative;
+    isolation: isolate;
+  }
+  main > section:first-of-type:not(.bg-ink):not(.bg-forest)::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 50vw);
+    right: calc(50% - 50vw);
+    pointer-events: none;
+    background:
+      radial-gradient(38rem 26rem at 88% 8%, rgb(200 224 90 / 0.42), transparent 70%),
+      radial-gradient(44rem 30rem at 6% 0%, rgb(31 75 58 / 0.16), transparent 70%),
+      radial-gradient(30rem 22rem at 55% 100%, rgb(63 138 95 / 0.12), transparent 70%);
+  }
+  main > section:first-of-type:not(.bg-ink):not(.bg-forest)::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 50vw);
+    right: calc(50% - 50vw);
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgb(22 21 19 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(22 21 19 / 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 80% at 60% 20%, #000 20%, transparent 75%);
+  }
+
+  /* Dark and forest sections: glowing colour fields and a faint grid. */
+  section.bg-ink,
+  section.bg-forest,
+  footer.bg-ink {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  section.bg-ink {
+    background-image:
+      radial-gradient(42rem 30rem at 92% 0%, rgb(200 224 90 / 0.16), transparent 70%),
+      radial-gradient(48rem 34rem at 0% 100%, rgb(63 138 95 / 0.34), transparent 70%);
+  }
+  section.bg-forest {
+    background-image:
+      radial-gradient(40rem 30rem at 100% 0%, rgb(200 224 90 / 0.28), transparent 65%),
+      radial-gradient(50rem 36rem at 0% 100%, rgb(10 30 22 / 0.65), transparent 70%),
+      linear-gradient(135deg, #1f4b3a 0%, #17402f 55%, #0f2c20 100%);
+  }
+  footer.bg-ink {
+    background-image: radial-gradient(60rem 30rem at 15% 100%, rgb(63 138 95 / 0.35), transparent 70%),
+      radial-gradient(30rem 20rem at 95% 10%, rgb(200 224 90 / 0.1), transparent 70%);
+  }
+  section.bg-ink::after,
+  section.bg-forest::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgb(253 252 249 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(253 252 249 / 0.05) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 80% 70% at 70% 30%, #000 10%, transparent 75%);
+  }
+
+  /* Light sections: white panels get a subtle dotted texture in one corner. */
+  main > section.bg-white:not(:first-of-type) {
+    position: relative;
+    isolation: isolate;
+  }
+  main > section.bg-white:not(:first-of-type)::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    width: min(32rem, 60%);
+    height: 22rem;
+    pointer-events: none;
+    background-image: radial-gradient(rgb(31 75 58 / 0.22) 1.2px, transparent 1.4px);
+    background-size: 18px 18px;
+    mask-image: radial-gradient(ellipse at top right, #000 0%, transparent 70%);
+  }
+
+  /* Gradient-lit buttons. */
+  .btn-primary {
+    background: linear-gradient(135deg, #2a6a50 0%, var(--color-forest) 50%, var(--color-forest-deep) 100%);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), 0 10px 24px -12px rgb(31 75 58 / 0.75);
+    transition: box-shadow 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #2a6a50 0%, var(--color-forest) 50%, var(--color-forest-deep) 100%);
+    filter: brightness(1.08);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 16px 30px -12px rgb(31 75 58 / 0.85);
+    transform: translateY(-1px);
+  }
+  .btn-signal {
+    box-shadow: 0 0 0 0 rgb(200 224 90 / 0), 0 12px 32px -10px rgb(200 224 90 / 0.55);
+    transition: box-shadow 0.25s ease, background-color 0.2s ease, transform 0.25s ease;
+  }
+  .btn-signal:hover {
+    background: #d8ee6c;
+    box-shadow: 0 0 0 6px rgb(200 224 90 / 0.18), 0 16px 36px -10px rgb(200 224 90 / 0.7);
+    transform: translateY(-1px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-primary:hover,
+    .btn-signal:hover {
+      transform: none;
+    }
+  }
+
+  /* Section label: accent rule becomes a gradient dash. */
+  .eyebrow-mark::before {
+    width: 2.25rem;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-forest), #4f9a68);
+  }
+  .eyebrow-dark::before,
+  .bg-ink .eyebrow-mark::before,
+  .bg-forest .eyebrow-mark::before {
+    background: linear-gradient(90deg, var(--color-signal), #f1f8c8);
+  }
+
+  /* Lime highlighter behind accent words. */
+  .hl {
+    background: linear-gradient(transparent 58%, rgb(200 224 90 / 0.75) 58%, rgb(200 224 90 / 0.75) 92%, transparent 92%);
+    padding-inline: 0.08em;
+  }
+
+  /* Gradient text for big wordmarks and accent words. */
+  .text-gradient {
+    background: linear-gradient(100deg, var(--color-forest) 0%, #3f8a5f 50%, #8fb43a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-signal {
+    background: linear-gradient(100deg, var(--color-signal) 0%, #eef7c2 60%, #7fcf9a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Card surface with a gradient edge that lights up on hover. */
+  .card {
+    position: relative;
+    border-radius: 1.25rem;
+    background: var(--color-white);
+    border: 1px solid var(--color-line);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 18px 40px -30px rgb(22 21 19 / 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .card:hover {
+    border-color: transparent;
+    box-shadow: 0 0 0 1.5px var(--color-forest), 0 26px 50px -28px rgb(31 75 58 / 0.55);
+    transform: translateY(-4px);
+  }
+  .card-dark {
+    background: linear-gradient(160deg, rgb(253 252 249 / 0.07), rgb(253 252 249 / 0.02));
+    border-color: rgb(253 252 249 / 0.12);
+    box-shadow: none;
+  }
+  .card-dark:hover {
+    box-shadow: 0 0 0 1.5px rgb(200 224 90 / 0.7), 0 26px 60px -30px rgb(200 224 90 / 0.35);
+  }
+  .card-forest {
+    color: var(--color-paper);
+    background:
+      radial-gradient(28rem 18rem at 100% 0%, rgb(200 224 90 / 0.28), transparent 65%),
+      linear-gradient(160deg, #24563f 0%, var(--color-forest) 45%, var(--color-forest-deep) 100%);
+    border-color: transparent;
+  }
+  .card-forest:hover {
+    box-shadow: 0 0 0 1.5px var(--color-signal), 0 30px 60px -28px rgb(31 75 58 / 0.8);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card:hover {
+      transform: none;
+    }
+  }
+
+  /* Icon-free accent tile: a glowing gradient orb. */
+  .orb {
+    display: inline-block;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 30%, #f1f8c8 0%, var(--color-signal) 35%, #4f9a68 100%);
+    box-shadow: 0 10px 26px -8px rgb(200 224 90 / 0.65);
+  }
+  .orb-forest {
+    background: radial-gradient(circle at 30% 30%, #8fd0a5 0%, #2f7556 40%, var(--color-forest-deep) 100%);
+    box-shadow: 0 10px 26px -10px rgb(31 75 58 / 0.7);
+  }
+
+  /* Decorative concentric rings for closing sections. */
+  .rings {
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 999px;
+    width: 46rem;
+    height: 46rem;
+    background: repeating-radial-gradient(circle, transparent 0 46px, rgb(200 224 90 / 0.14) 46px 47px);
+    mask-image: radial-gradient(circle, #000 30%, transparent 70%);
+  }
+
+  /* Scrolling ticker band. */
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 2.5rem;
+    padding-right: 2.5rem;
+    animation: marquee 45s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+
+  /* Photos: framed with an offset colour block. */
+  .photo-frame {
+    position: relative;
+    isolation: isolate;
+  }
+  .photo-frame::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 1.5rem -1rem -1rem 1.5rem;
+    border-radius: 1.25rem;
+    background: linear-gradient(135deg, var(--color-signal), #4f9a68);
+  }
+
+  /* Badges and chips pick up more colour. */
+  .chip:hover {
+    border-color: var(--color-forest);
+    background: linear-gradient(135deg, var(--color-forest-tint), #eef5d0);
+  }
+
+  /* Big footer wordmark glows instead of sitting flat. */
+  .wordmark {
+    background: linear-gradient(180deg, rgb(200 224 90 / 0.32) 0%, rgb(200 224 90 / 0.04) 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Scroll-in reveal for sections below the first screen. Only applied once JS has run. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready main section.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .reveal-ready main section.reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .float-slow {
+    animation: float 7s ease-in-out infinite;
+  }
+  @keyframes float {
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}

@@ -43,9 +43,9 @@ function ServicesPage() {
   return (
     <>
       <section className="wrap pt-16 pb-16 md:pt-24 md:pb-24">
-        <p className="eyebrow rise">Services and pricing</p>
+        <p className="eyebrow eyebrow-mark rise">Services and pricing</p>
         <h1 className="display rise rise-2 mt-6 max-w-5xl text-[3rem] md:text-7xl lg:text-[5.75rem]">
-          Clear services. <span className="serif text-forest">Transparent prices</span> in naira.
+          Clear services. <span className="serif text-gradient pr-1">Transparent prices</span> in naira.
         </h1>
         <div className="rise rise-3 mt-8 grid gap-8 md:grid-cols-12">
           <p className="max-w-2xl text-lg leading-relaxed text-muted md:col-span-7 md:text-xl">
@@ -53,11 +53,11 @@ function ServicesPage() {
             proposal is tailored to your goals and the functionality you need.
           </p>
           <nav aria-label="Service categories" className="md:col-span-4 md:col-start-9">
-            <ul className="border-t border-line text-sm">
+            <ul className="flex flex-wrap gap-2 text-sm">
               {[{ id: 'packages', title: 'Website packages' }, ...categories, { id: 'faq', title: 'Pricing questions' }].map((c) => (
-                <li key={c.id} className="border-b border-line">
-                  <a href={`#${c.id}`} className="flex justify-between py-2.5 hover:text-forest">
-                    {c.title} <span aria-hidden="true">↓</span>
+                <li key={c.id}>
+                  <a href={`#${c.id}`} className="chip !py-2 !text-sm">
+                    {c.title} <span className="text-forest" aria-hidden="true">↓</span>
                   </a>
                 </li>
               ))}
@@ -67,7 +67,7 @@ function ServicesPage() {
       </section>
 
 
-      <section id="packages" className="border-t border-line bg-paper-deep/50 py-24 md:py-32" aria-labelledby="packages-title">
+      <section id="packages" className="border-t border-line bg-forest-tint/60 py-24 md:py-32" aria-labelledby="packages-title">
         <div className="wrap">
           <div className="grid gap-8 md:grid-cols-12 md:gap-10">
             <p className="eyebrow eyebrow-mark md:col-span-3 md:pt-3">Website packages</p>
