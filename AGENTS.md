@@ -36,3 +36,5 @@ A multi-page marketing site built with TanStack Start, React 19 and Tailwind v4 
 - Never mark a payment successful except through `markPaymentSuccess` after server-side gateway verification, or after staff confirm a credit on the bank statement.
 - Course seed content lives in `src/data/academy.ts` and is inserted once (`ensureSeeded`). After that, the admin panel is the source of truth.
 - Testimonials are DB-managed and are published only with consent. Never add invented ones.
+- Catalogue (`/academy/courses`): search plus subject/level/open filters, held in the URL search params. Courses have `category`, `skills`, `instructorName`/`instructorBio` and `faqs`, all staff-edited in the admin Courses tab. `level` is no longer unique. Instructor details and FAQs are shown only when staff enter them, so never fill them with invented people or claims.
+- Free previews: lessons with `isPreview` are public at `/academy/courses/$slug/preview/$lessonId` (served only by `getPreviewLesson`, which checks the flag). Everything else still goes through the access-checked `getLesson`.

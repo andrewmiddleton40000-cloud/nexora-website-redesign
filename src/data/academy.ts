@@ -157,6 +157,7 @@ export type SeedLesson = {
   secondaryNote?: string
   durationMinutes?: number
   isLiveSession?: boolean
+  isPreview?: boolean
 }
 export type SeedModule = { week: number; title: string; summary: string; topics: string[]; lessons: SeedLesson[] }
 export type SeedQuiz = { title: string; description: string; weight: number; questions: Array<{ q: string; options: string[]; answer: number }> }
@@ -165,6 +166,8 @@ export type SeedCourse = {
   level: number
   title: string
   levelLabel: 'Beginner' | 'Intermediate' | 'Advanced'
+  category: string
+  skills: string[]
   summary: string
   description: string
   outcomes: string[]
@@ -187,6 +190,8 @@ export const seedCourses: SeedCourse[] = [
     level: 1,
     title: 'AI & Prompt Engineering',
     levelLabel: 'Beginner',
+    category: 'Artificial Intelligence',
+    skills: ['Prompt writing', 'AI literacy', 'Fact-checking', 'Responsible AI use', 'Research with AI'],
     summary: 'Understand how AI tools work and learn to write clear, effective prompts that produce useful, checked results.',
     description:
       'A four-week foundation course for complete beginners. Learners discover what artificial intelligence is, how tools like ChatGPT, Gemini and Copilot generate answers, and where they go wrong. They then learn a structured method for writing prompts, apply AI to research, writing, presentations and everyday productivity, and finish by building and presenting a responsible AI-assisted project.',
@@ -215,6 +220,7 @@ export const seedCourses: SeedCourse[] = [
           {
             title: 'Live session 1 — What AI is and how AI tools work',
             kind: 'live',
+            isPreview: true,
             isLiveSession: true,
             durationMinutes: 60,
             summary: 'A friendly introduction to artificial intelligence and the idea of a computer that learns from examples.',
@@ -561,6 +567,8 @@ After presentations, complete the final assessment quiz.`,
     level: 2,
     title: 'AI Productivity & Digital Creativity',
     levelLabel: 'Intermediate',
+    category: 'Productivity & Creativity',
+    skills: ['AI productivity', 'Digital content', 'Documents & spreadsheets', 'Presentations'],
     summary: 'Use AI tools to organise work, manage information and create digital content with confidence.',
     description:
       'Builds on Level 1 to apply AI across everyday productivity and creative work: organising research and notes, planning projects, working with documents and spreadsheets, and producing visual and written digital content responsibly.',
@@ -583,6 +591,8 @@ After presentations, complete the final assessment quiz.`,
     level: 3,
     title: 'Coding & Web Development',
     levelLabel: 'Intermediate',
+    category: 'Coding & Web',
+    skills: ['HTML', 'CSS', 'JavaScript basics', 'Web publishing'],
     summary: 'Learn the fundamentals of programming and build your first web pages.',
     description:
       'An introduction to how the web works and to writing code: HTML for structure, CSS for design and the basics of JavaScript for interactivity — with AI used as a coding tutor, not a shortcut.',
@@ -605,6 +615,8 @@ After presentations, complete the final assessment quiz.`,
     level: 4,
     title: 'AI Automation & Digital Solutions',
     levelLabel: 'Advanced',
+    category: 'Automation',
+    skills: ['Process mapping', 'No-code automation', 'AI-assisted tools', 'Digital risk assessment'],
     summary: 'Design simple automations and AI-powered tools that solve real problems.',
     description:
       'Learners map real processes, identify repetitive steps and design automations and AI-assisted tools to improve them, with attention to reliability, privacy and the people who use them.',
@@ -627,6 +639,8 @@ After presentations, complete the final assessment quiz.`,
     level: 5,
     title: 'Digital Innovation & Project Development',
     levelLabel: 'Advanced',
+    category: 'Innovation & Projects',
+    skills: ['Problem research', 'Project planning', 'Prototyping', 'Presenting'],
     summary: 'Take a digital idea from problem to working prototype and present it.',
     description:
       'A capstone level in which learners research a real problem, design a digital solution, build a prototype using the skills from earlier levels and present it with a clear plan for testing and improvement.',

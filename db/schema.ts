@@ -128,8 +128,18 @@ export const schoolEnquiries = pgTable('school_enquiries', {
 export const courses = pgTable('courses', {
   id: serial().primaryKey(),
   slug: text().notNull().unique(),
-  level: integer().notNull().unique(),
+  /** Position in the catalogue / difficulty step. No longer unique: several subjects can share a level. */
+  level: integer().notNull(),
   title: text().notNull(),
+  /** Catalogue subject, e.g. "Artificial Intelligence". */
+  category: text(),
+  /** Short skill tags shown on cards and course pages. */
+  skills: jsonb().$type<string[]>().notNull().default([]),
+  /** Staff-entered instructor details. Shown only when set — never invented. */
+  instructorName: text('instructor_name'),
+  instructorBio: text('instructor_bio'),
+  /** Staff-entered course FAQs. */
+  faqs: jsonb().$type<Array<{ q: string; a: string }>>().notNull().default([]),
   /** Beginner | Intermediate | Advanced */
   levelLabel: text('level_label').notNull(),
   summary: text().notNull(),
@@ -187,6 +197,8 @@ export const lessons = pgTable(
     /** Counts towards the attendance / recorded-learning requirement. */
     isLiveSession: boolean('is_live_session').notNull().default(false),
     published: boolean().notNull().default(true),
+    /** Free preview: readable by anyone from the course page, without enrolling. */
+    isPreview: boolean('is_preview').notNull().default(false),
   },
   (t) => [uniqueIndex('lessons_order_unique').on(t.courseId, t.sortOrder)],
 )

@@ -20,6 +20,7 @@ function Workspace() {
   const w = Route.useLoaderData()
   const p = w.progress
   const done = new Set(p?.completedLessonIds ?? [])
+  const resume = w.resumeLessonId ? w.modules.flatMap((m) => m.lessons).find((l) => l.id === w.resumeLessonId) ?? null : null
   const checks = p
     ? [
         ['Required lessons completed', p.checks.lessons, `${p.lessonsDone}/${p.lessonsTotal}`],
@@ -37,12 +38,25 @@ function Workspace() {
           <p className="eyebrow mt-6">Level {w.course.level}</p>
           <h1 className="display mt-3 text-4xl md:text-6xl">{w.course.title}</h1>
           {w.staffPreview && <div className="mt-6"><Alert tone="info">Staff preview — you can view content, but progress is not tracked.</Alert></div>}
-          {p && (
-            <div className="mt-8 max-w-xl">
-              <div className="mb-2 flex justify-between text-sm"><span className="text-muted">Progress</span><span className="tabular-nums font-medium">{p.percent}%</span></div>
-              <ProgressBar value={p.percent} />
-            </div>
+          {w.cohort && (
+            <p className="mt-4 text-sm text-muted">
+              Class group: <span className="text-ink">{w.cohort.name}</span>
+              {w.cohort.startsOn ? ` · ${formatDate(w.cohort.startsOn)}${w.cohort.endsOn ? ` to ${formatDate(w.cohort.endsOn)}` : ''}` : ''}
+            </p>
           )}
+          <div className="mt-8 flex flex-wrap items-end gap-x-12 gap-y-6">
+            {p && (
+              <div className="w-full max-w-xl">
+                <div className="mb-2 flex justify-between text-sm"><span className="text-muted">Progress</span><span className="tabular-nums font-medium">{p.percent}%</span></div>
+                <ProgressBar value={p.percent} />
+              </div>
+            )}
+            {resume && (
+              <Link to="/academy/learn/$slug/lesson/$lessonId" params={{ slug: w.course.slug, lessonId: String(resume.id) }} className="btn btn-primary">
+                {done.size ? 'Resume' : 'Start'}: {resume.title.length > 48 ? `${resume.title.slice(0, 46)}…` : resume.title} <span className="arrow" aria-hidden="true">→</span>
+              </Link>
+            )}
+          </div>
         </div>
       </section>
       <div className="wrap mt-12 grid gap-14 lg:grid-cols-12">
@@ -52,7 +66,14 @@ function Workspace() {
             <ol className="mt-4 border-t border-ink">
               {w.modules.map((m) => (
                 <li key={m.id} className="border-b border-line py-6">
-                  <p className="text-sm text-muted">Week {m.week}</p>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <p className="text-sm text-muted">Week {m.week}</p>
+                    {m.lessons.length > 0 && (
+                      <p className="text-sm tabular-nums text-muted">
+                        {m.lessons.filter((l) => done.has(l.id)).length}/{m.lessons.length} done
+                      </p>
+                    )}
+                  </div>
                   <h3 className="mt-1 text-xl font-medium">{m.title}</h3>
                   <ul className="mt-4 space-y-1">
                     {m.lessons.map((l) => (
@@ -62,7 +83,7 @@ function Workspace() {
                             <span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full border text-[0.6rem] ${done.has(l.id) ? 'border-forest bg-forest text-white' : 'border-line'}`} aria-hidden="true">{done.has(l.id) ? '✓' : ''}</span>
                             <span className="group-hover:text-forest">{l.title}</span>
                           </span>
-                          <span className="shrink-0 text-xs uppercase tracking-[0.12em] text-muted">{kindLabel[l.kind]}{l.hasVideo ? ' · ▶' : ''}</span>
+                          <span className="shrink-0 text-xs uppercase tracking-[0.12em] text-muted">{kindLabel[l.kind]}{l.durationMinutes ? ` · ${l.durationMinutes} min` : ''}{l.hasVideo ? ' · ▶' : ''}</span>
                         </Link>
                       </li>
                     ))}
