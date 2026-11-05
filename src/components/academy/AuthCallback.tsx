@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { identity } from '@/lib/auth-client'
 
 /**
  * Netlify Identity emails link back to the site with a token in the URL hash
@@ -8,7 +9,7 @@ export function AuthCallback() {
   useEffect(() => {
     const hash = window.location.hash
     if (!/(confirmation|recovery|invite|email_change)_token=|access_token=/.test(hash)) return
-    import('@netlify/identity')
+    identity()
       .then(async ({ handleAuthCallback }) => {
         const r = await handleAuthCallback()
         if (!r) return
