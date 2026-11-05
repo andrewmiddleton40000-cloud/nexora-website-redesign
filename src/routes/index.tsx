@@ -73,9 +73,9 @@ function Home() {
                 src={img('hero.jpg', 1200)}
                 srcSet={imgSet('hero.jpg', [640, 960, 1280, 1376])}
                 sizes="(min-width: 1024px) 45vw, 100vw"
-                alt="Two colleagues reviewing code together on a laptop in a busy office"
+                alt="A woman working on a tablet beside a glass wall of blue-lit server racks"
                 fetchPriority="high"
-                className="h-full w-full object-cover object-[72%_50%]"
+                className="h-full w-full object-cover object-[68%_50%]"
               />
             </div>
             <p className="float-slow absolute right-4 top-4 rounded-2xl bg-ink px-5 py-4 text-paper shadow-[0_20px_40px_-20px_rgb(22_21_19/0.8)] lg:right-10">
