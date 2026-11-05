@@ -147,7 +147,7 @@ function Register() {
               <ol className="mt-4 list-decimal space-y-2 pl-4">
                 <li>Confirm your email address.</li>
                 <li>Sign in to your dashboard.</li>
-                <li>Pay for your course (online or bank transfer).</li>
+                <li>Pay for your course by bank transfer.</li>
                 <li>Join your cohort and start learning.</li>
               </ol>
             </div>

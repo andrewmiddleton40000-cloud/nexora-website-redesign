@@ -67,13 +67,114 @@
     }
   }
 
-  /* Small uppercase section label: "(02) Services" */
+  /* Small uppercase section label, e.g. "Services". Add .eyebrow-mark for the leading accent rule. */
   .eyebrow {
     font-size: 0.75rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     font-weight: 500;
     color: var(--color-muted);
+  }
+
+  .eyebrow-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    align-self: start;
+  }
+  .eyebrow-mark::before {
+    content: "";
+    width: 1.75rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-forest);
+    flex-shrink: 0;
+  }
+  .eyebrow-dark::before,
+  .bg-ink .eyebrow-mark::before,
+  .bg-forest .eyebrow-mark::before {
+    background: var(--color-signal);
+  }
+
+  /* Small accent marker used in lists in place of numbers. */
+  .dot-mark {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    background: var(--color-forest);
+    box-shadow: 0 0 0 4px var(--color-forest-tint);
+  }
+  .dot-mark-signal {
+    background: var(--color-signal);
+    box-shadow: 0 0 0 4px rgb(200 224 90 / 0.18);
+  }
+  .tick {
+    display: inline-grid;
+    place-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--color-forest-tint);
+    color: var(--color-forest);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 0.1rem;
+  }
+
+  /* Pill tag, e.g. the audiences in "Who we work with". */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: var(--color-paper);
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .chip:hover {
+    border-color: var(--color-forest);
+    background: var(--color-forest-tint);
+  }
+
+  /* Round white badge holding a brand logo in its original colour. */
+  .social-btn {
+    display: grid;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    box-shadow: 0 4px 14px -8px rgb(22 21 19 / 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .social-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px -10px rgb(22 21 19 / 0.45);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .social-btn:hover {
+      transform: none;
+    }
+  }
+
+  /* Gentle hover for cards. */
+  .lift {
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .lift:hover {
+    box-shadow: 0 18px 40px -24px rgb(22 21 19 / 0.35);
+    transform: translateY(-3px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lift:hover {
+      transform: none;
+    }
   }
 
   .display {

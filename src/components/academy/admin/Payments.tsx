@@ -14,11 +14,10 @@ export function Payments() {
   return (
     <div className="space-y-12">
       {data && (
-        <div className="grid gap-3 text-sm sm:grid-cols-3">
-          <p>Paystack: {data.gateways.paystack ? <Badge tone="success">configured</Badge> : <Badge>not configured</Badge>}</p>
-          <p>Flutterwave: {data.gateways.flutterwave ? <Badge tone="success">configured</Badge> : <Badge>not configured</Badge>}</p>
-          <p>Bank transfer: manual verification below</p>
-        </div>
+        <p className="text-sm">
+          Payment method: <Badge tone="success">Bank transfer only</Badge>{' '}
+          <span className="text-muted">Learners see the bank details saved below. Confirm each transfer against the bank statement before verifying it.</span>
+        </p>
       )}
       <Panel
         title="Payments"

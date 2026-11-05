@@ -27,7 +27,7 @@ function AboutPage() {
 
       <section className="border-y border-line bg-white">
         <div className="wrap grid gap-12 py-20 md:grid-cols-12 md:py-28">
-          <p className="eyebrow md:col-span-3 md:pt-2">(01) Our mission</p>
+          <p className="eyebrow eyebrow-mark md:col-span-3 md:pt-2">Our mission</p>
           <div className="md:col-span-8 space-y-6 text-xl leading-relaxed text-ink-soft">
             <p className="text-2xl md:text-3xl leading-snug tracking-[-0.02em] text-ink">“{site.positioning}”</p>
             <p>
@@ -50,7 +50,7 @@ function AboutPage() {
             src={img('hospitality.jpg', 1200)}
             srcSet={imgSet('hospitality.jpg', [640, 960, 1280, 1408])}
             sizes="(min-width: 768px) 50vw, 100vw"
-            alt="A guest receiving a room key at a boutique hotel reception, with a booking calendar on a tablet"
+            alt="A shop assistant helping a customer pay at a tablet checkout counter"
             loading="lazy"
             className="h-full w-full object-cover"
           />
@@ -70,7 +70,7 @@ function AboutPage() {
       <section className="py-24 md:py-32" aria-labelledby="capabilities-title">
         <div className="wrap grid gap-12 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-4">
-            <p className="eyebrow">(02) Capabilities</p>
+            <p className="eyebrow eyebrow-mark">Capabilities</p>
             <h2 id="capabilities-title" className="display mt-6 text-[2.6rem] md:text-5xl">
               What we <span className="serif">design and build.</span>
             </h2>
@@ -78,7 +78,7 @@ function AboutPage() {
           <ol className="border-t border-ink md:col-span-8">
             {categories.map((c) => (
               <li key={c.id} className="grid gap-3 border-b border-line py-7 sm:grid-cols-[3rem_1fr]">
-                <span className="text-sm text-forest tabular-nums pt-1">{c.number}</span>
+                <span className="pt-3" aria-hidden="true"><span className="dot-mark" /></span>
                 <div>
                   <Link to="/services" hash={c.id} className="text-2xl font-medium tracking-[-0.02em] hover:text-forest">
                     {c.title}
@@ -95,7 +95,6 @@ function AboutPage() {
         <div className="wrap">
           <SectionHead
             tone="dark"
-            index="03"
             label="Our approach"
             title={<>How we <span className="serif text-signal">work with you.</span></>}
           />
@@ -110,7 +109,7 @@ function AboutPage() {
 
       <section className="border-b border-line bg-white" aria-labelledby="commitment-title">
         <div className="wrap grid gap-10 py-20 md:grid-cols-12 md:py-28">
-          <p className="eyebrow md:col-span-3 md:pt-3">(04) Our commitment</p>
+          <p className="eyebrow eyebrow-mark md:col-span-3 md:pt-3">Our commitment</p>
           <div className="md:col-span-9">
             <h2 id="commitment-title" className="display text-[2.4rem] md:text-5xl max-w-3xl">
               Honest advice, clear pricing, <span className="serif text-forest">and work you can rely on.</span>

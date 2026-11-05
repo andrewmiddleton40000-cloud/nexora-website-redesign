@@ -323,6 +323,9 @@ export const startPayment = createServerFn({ method: 'POST' })
     const a = await courseAvailability(u, c)
     if (a.state === 'payment_pending') throw new AppError('A bank transfer for this course is already awaiting verification.', 'CONFLICT')
     if (a.state !== 'eligible') throw new AppError('You are not currently eligible to enrol in this course.', 'FORBIDDEN')
+    if (data.provider !== 'bank_transfer' && !gatewayStatus()[data.provider]) {
+      throw new AppError('Online payments are not available. Please pay by bank transfer.', 'UNAVAILABLE')
+    }
     const d = db()
     if (data.provider === 'bank_transfer') {
       if (!(await bankDetails())) throw new AppError('Bank transfer details have not been published yet.', 'UNAVAILABLE')

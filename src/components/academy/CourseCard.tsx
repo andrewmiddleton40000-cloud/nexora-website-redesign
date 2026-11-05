@@ -104,7 +104,7 @@ export function CourseRow({ c, expanded = false }: { c: CourseSummary; expanded?
         <div className="md:col-span-3">
           <p className="text-sm tabular-nums text-muted">Level {c.level}</p>
           {c.image && (
-            <div className={`mt-4 aspect-[4/3] overflow-hidden bg-paper-deep ${locked ? 'grayscale-[0.6]' : ''}`}>
+            <div className={`mt-4 aspect-[4/3] overflow-hidden rounded-2xl bg-paper-deep ${locked ? 'grayscale-[0.6]' : ''}`}>
               <img
                 src={img(c.image, 600)}
                 srcSet={imgSet(c.image, [360, 600, 900])}

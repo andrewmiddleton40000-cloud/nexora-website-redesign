@@ -44,14 +44,14 @@ function SchoolsPage() {
           </div>
           <div className="rise rise-2 md:col-span-5">
             <div className="aspect-[4/5] overflow-hidden bg-ink-soft">
-              <img src={img('academy/classroom.jpg', 900)} srcSet={imgSet('academy/classroom.jpg', [480, 800, 1200])} sizes="(min-width: 768px) 40vw, 100vw" alt="Students working at computers in a school computer lab" className="h-full w-full object-cover" />
+              <img src={img('academy/classroom.jpg', 900)} srcSet={imgSet('academy/classroom.jpg', [480, 800, 1200])} sizes="(min-width: 768px) 40vw, 100vw" alt="Pupils writing in their exercise books in class" className="h-full w-full object-cover" />
             </div>
           </div>
         </div>
       </section>
 
       <section className="wrap py-24 md:py-32">
-        <SectionHead index="01" label="Partnership model" title={<>Clear roles. <span className="serif text-forest">Shared purpose.</span></>} />
+        <SectionHead label="Partnership model" title={<>Clear roles. <span className="serif text-forest">Shared purpose.</span></>} />
         <div className="mt-16 grid gap-12 md:grid-cols-2">
           <div className="border-t border-ink pt-6">
             <p className="eyebrow">Nexora provides</p>
@@ -87,11 +87,11 @@ function SchoolsPage() {
 
       <section className="border-t border-line bg-white">
         <div className="wrap py-24 md:py-32">
-          <SectionHead index="02" label="How it works" title={<>From first call to <span className="serif">first class.</span></>} />
+          <SectionHead label="How it works" title={<>From first call to <span className="serif">first class.</span></>} />
           <ol className="mt-16 grid border-t border-ink sm:grid-cols-2 md:grid-cols-3">
             {steps.map((s) => (
               <li key={s.n} className="border-b border-line py-8 sm:pr-8">
-                <span className="display text-4xl text-forest">{s.n}</span>
+                <span className="dot-mark" aria-hidden="true" />
                 <h3 className="mt-5 text-lg font-medium">{s.t}</h3>
                 <p className="mt-2 leading-relaxed text-muted">{s.b}</p>
               </li>
@@ -102,7 +102,7 @@ function SchoolsPage() {
 
       <section className="wrap grid gap-12 py-24 md:grid-cols-12 md:py-32">
         <div className="md:col-span-5">
-          <p className="eyebrow">(03) For school leaders</p>
+          <p className="eyebrow eyebrow-mark">For school leaders</p>
           <h2 className="display mt-5 text-4xl md:text-5xl">
             What your school <span className="serif text-forest">receives.</span>
           </h2>
@@ -117,8 +117,8 @@ function SchoolsPage() {
           </p>
         </div>
         <div className="md:col-span-6 md:col-start-7">
-          <div className="aspect-[3/2] overflow-hidden bg-paper-deep">
-            <img src={img('academy/project.jpg', 900)} srcSet={imgSet('academy/project.jpg', [480, 800, 1200])} sizes="(min-width: 768px) 45vw, 100vw" alt="Two students presenting a project from a laptop to classmates" loading="lazy" className="h-full w-full object-cover" />
+          <div className="aspect-[3/2] overflow-hidden rounded-2xl bg-paper-deep">
+            <img src={img('academy/project.jpg', 900)} srcSet={imgSet('academy/project.jpg', [480, 800, 1200])} sizes="(min-width: 768px) 45vw, 100vw" alt="Three learners reviewing a project together on a laptop" loading="lazy" className="h-full w-full object-cover" />
           </div>
         </div>
       </section>
@@ -126,7 +126,7 @@ function SchoolsPage() {
       <section id="enquire" className="border-t border-line bg-white">
         <div className="wrap grid gap-12 py-24 md:grid-cols-12 md:py-32">
           <div className="md:col-span-4">
-            <p className="eyebrow">(04) Enquire</p>
+            <p className="eyebrow eyebrow-mark">Enquire</p>
             <h2 className="display mt-5 text-4xl md:text-5xl">
               Start a <span className="serif text-forest">conversation.</span>
             </h2>

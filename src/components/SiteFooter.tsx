@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { nav, site } from '@/data/site'
 import { categories } from '@/data/pricing'
 import { Logo } from './Logo'
+import { SocialLinks } from './SocialIcons'
 
 export function SiteFooter() {
   const year = new Date().getFullYear()
@@ -61,24 +62,8 @@ export function SiteFooter() {
                   Request a proposal
                 </Link>
               </li>
-              <li>
-                <a href={site.whatsapp.url} target="_blank" rel="noopener noreferrer" className="text-paper/85 hover:text-signal transition-colors">
-                  WhatsApp {site.whatsapp.display}
-                </a>
-              </li>
-              <li>
-                <a href={`tel:${site.phone.tel}`} className="text-paper/85 hover:text-signal transition-colors">
-                  Call {site.phone.display}
-                </a>
-              </li>
-              {site.socials.map((s) => (
-                <li key={s.href}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-paper/85 hover:text-signal transition-colors">
-                    {s.label}
-                  </a>
-                </li>
-              ))}
             </ul>
+            <SocialLinks className="mt-6" />
           </div>
         </div>
 
