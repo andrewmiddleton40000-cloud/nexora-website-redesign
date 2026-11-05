@@ -1,11 +1,12 @@
 import { Link } from '@tanstack/react-router'
 import { academy, academyNav } from '@/data/academy'
+import { ADMIN_AREA, hasRole } from '@/lib/roles'
 
 export type SessionInfo = { id: number; fullName: string; email: string; role: string } | null
 
 /** Secondary navigation that gives the Academy its own identity inside the Nexora site. */
 export function AcademyBar({ session }: { session: SessionInfo }) {
-  const staff = session && ['super_admin', 'academic_admin', 'finance_admin', 'instructor'].includes(session.role)
+  const staff = session && hasRole(session.role, ADMIN_AREA)
   const accountTo = !session ? '/academy/login' : staff ? '/academy/admin' : session.role === 'school_partner' ? '/academy/school' : '/academy/dashboard'
   return (
     <div className="bg-ink text-paper">

@@ -90,7 +90,7 @@ function NotFound() {
       <div className="mt-10 flex flex-wrap gap-3">
         <Link to="/" className="btn btn-primary">Back to home</Link>
         <Link to="/contact" className="btn btn-ghost">Contact us</Link>
-        <Link to="/insights" className="btn btn-ghost">Read insights</Link>
+        <Link to="/blog" className="btn btn-ghost">Read the blog</Link>
       </div>
     </section>
   )

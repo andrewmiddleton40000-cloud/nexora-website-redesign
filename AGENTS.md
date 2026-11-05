@@ -4,7 +4,7 @@ A multi-page marketing site built with TanStack Start, React 19 and Tailwind v4 
 
 ## Layout
 
-- `src/routes/`: file routes (`index`, `services`, `work`, `about`, `contact`). `__root.tsx` holds the document shell, fonts, global meta, header, footer and the 404 page.
+- `src/routes/`: file routes (`index`, `services`, `work`, `about`, `contact`, `blog`). `__root.tsx` holds the document shell, fonts, global meta, header, footer and the 404 page.
 - `src/components/Sections.tsx`: shared editorial sections (SectionHead, ServiceIndex, Principles, ProcessTimeline, AudienceList, WorkShowcase, ClosingCTA).
 - `src/components/ContactForm.tsx`: the Netlify Forms enquiry form. It POSTs to `/__forms.html`, not `/`, because the SSR handler owns `/`.
 - `public/__forms.html`: the static form registration. Its field names **must** match ContactForm.
@@ -39,3 +39,14 @@ A multi-page marketing site built with TanStack Start, React 19 and Tailwind v4 
 - Testimonials are DB-managed and are published only with consent. Never add invented ones.
 - Catalogue (`/academy/courses`): search plus subject/level/open filters, held in the URL search params. Courses have `category`, `skills`, `instructorName`/`instructorBio` and `faqs`, all staff-edited in the admin Courses tab. `level` is no longer unique. Instructor details and FAQs are shown only when staff enter them, so never fill them with invented people or claims.
 - Free previews: lessons with `isPreview` are public at `/academy/courses/$slug/preview/$lessonId` (served only by `getPreviewLesson`, which checks the flag). Everything else still goes through the access-checked `getLesson`.
+
+## Blog (`/blog`)
+
+- Formerly "Insights". `/insights` and `/insights/<slug>` 301-redirect to `/blog`.
+- Posts live in `blog_posts` (Netlify Database). Server functions are in `src/server/fns/blog.ts`, and the shared rules are in `src/server/blog.ts`. Public readers only see posts where `status = 'published'` and `published_at <= now()`, so a future `published_at` schedules a post. There is no cron job.
+- Writers are the `super_admin` and `editor` (Blog Editor) roles (`BLOG` in `src/lib/roles.ts`). They work in the Academy admin, Blog tab. Editors can only open the Blog tab. Saves check `expectedUpdatedAt`, so two writers can't silently overwrite each other.
+- Bodies are a small Markdown subset rendered by `src/lib/markdown.tsx` into React elements. Never render post HTML with `dangerouslySetInnerHTML`.
+- Uploaded images go to the `blog-media` Netlify Blobs store through `POST /api/blog/upload` (BLOG roles only), and are served from `/api/blog/media/<key>`.
+- The three original articles are seeded once from `src/data/blog-seed.ts`. After that, the admin is the source of truth.
+- Substack is the newsletter (subscribe prompts on the blog); the site is the home for posts. The RSS feed is at `/blog/rss.xml`.
+- Don't publish invented case studies, clients, statistics or quotes in posts. Author names appear only when entered.

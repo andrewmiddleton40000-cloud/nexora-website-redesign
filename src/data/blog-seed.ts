@@ -1,10 +1,10 @@
-// Insights articles. To publish a new one, add an entry to the top of the list —
-// it appears on /insights and at /insights/<slug>. Blocks render in order:
-// 'p' for paragraphs, 'h2' for sub-headings and 'ul' for bullet lists.
+// The first three blog articles, originally written into the site's code. They are
+// copied into the database once (see ensureBlogSeeded in src/server/blog.ts); after
+// that the Blog tab in the Academy admin is the source of truth, so edit posts there.
 
-export type Block = { type: 'p' | 'h2'; text: string } | { type: 'ul'; items: string[] }
+type Block = { type: 'p' | 'h2'; text: string } | { type: 'ul'; items: string[] }
 
-export type Article = {
+type Article = {
   slug: string
   title: string
   summary: string
@@ -15,9 +15,7 @@ export type Article = {
   body: Block[]
 }
 
-export const topics: Article['topic'][] = ['Website development', 'AI automation', 'Business technology', 'Digital growth']
-
-export const articles: Article[] = [
+const articles: Article[] = [
   {
     slug: 'prepare-before-commissioning-a-website',
     title: 'What to prepare before you commission a business website',
@@ -150,9 +148,18 @@ export const articles: Article[] = [
   },
 ]
 
-export function getArticle(slug: string) {
-  return articles.find((a) => a.slug === slug)
+/** Converts the original block format to the Markdown the blog editor uses. */
+function toMarkdown(body: Block[]) {
+  return body
+    .map((b) => (b.type === 'ul' ? b.items.map((t) => `- ${t}`).join('\n') : b.type === 'h2' ? `## ${b.text}` : b.text))
+    .join('\n\n')
 }
 
-const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
-export const formatDate = (iso: string) => dateFmt.format(new Date(`${iso}T00:00:00Z`))
+export const seedPosts = articles.map((a) => ({
+  slug: a.slug,
+  title: a.title,
+  summary: a.summary,
+  topic: a.topic,
+  body: toMarkdown(a.body),
+  publishedAt: `${a.published}T08:00:00.000Z`,
+}))

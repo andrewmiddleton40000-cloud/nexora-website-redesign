@@ -2,7 +2,7 @@ import { Link, createFileRoute, redirect } from '@tanstack/react-router'
 import { academySeo } from '@/lib/academy-seo'
 import { requireSession } from '@/lib/guards'
 import { signOut } from '@/lib/auth-client'
-import { adminTabs, hasRole, roleLabels, STAFF, type AdminTab, type Role } from '@/lib/roles'
+import { adminTabs, hasRole, roleLabels, ADMIN_AREA, type AdminTab, type Role } from '@/lib/roles'
 import { Overview } from '@/components/academy/admin/Overview'
 import { Students } from '@/components/academy/admin/Students'
 import { Schools } from '@/components/academy/admin/Schools'
@@ -11,13 +11,14 @@ import { Academic } from '@/components/academy/admin/Academic'
 import { Payments } from '@/components/academy/admin/Payments'
 import { Finance } from '@/components/academy/admin/Finance'
 import { Content } from '@/components/academy/admin/Content'
+import { Blog } from '@/components/academy/admin/Blog'
 
 export const Route = createFileRoute('/academy/admin')({
   validateSearch: (s: Record<string, unknown>): { tab?: AdminTab } => ({ tab: (adminTabs.some((t) => t.id === s.tab) ? s.tab : 'overview') as AdminTab }),
   beforeLoad: (ctx) => {
     const { session } = requireSession(ctx)
     // UX redirect only; every admin server function re-checks the role.
-    if (!hasRole(session.role, STAFF)) throw redirect({ to: '/academy/dashboard' })
+    if (!hasRole(session.role, ADMIN_AREA)) throw redirect({ to: '/academy/dashboard' })
     return { session }
   },
   head: () => academySeo({ title: 'Administration', path: '/academy/admin', noindex: true }),
@@ -70,6 +71,7 @@ function Admin() {
         {current.id === 'payments' && <Payments />}
         {current.id === 'finance' && <Finance />}
         {current.id === 'content' && <Content role={role} />}
+        {current.id === 'blog' && <Blog />}
       </div>
     </div>
   )
