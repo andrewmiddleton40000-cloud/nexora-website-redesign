@@ -104,9 +104,9 @@ export function CourseRow({ c, expanded = false }: { c: CourseSummary; expanded?
     <li className="border-b border-line">
       <article className="grid gap-6 py-10 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-3">
-          <p className="text-sm tabular-nums text-muted">Level {c.level}</p>
+          <p className="inline-flex rounded-full bg-forest px-3 py-1 text-xs font-medium tabular-nums text-signal">Level {c.level}</p>
           {c.image && (
-            <div className={`mt-4 aspect-[4/3] overflow-hidden rounded-2xl bg-paper-deep ${locked ? 'grayscale-[0.6]' : ''}`}>
+            <div className={`mt-4 aspect-[4/3] overflow-hidden rounded-2xl bg-paper-deep shadow-[0_20px_40px_-26px_rgb(22_21_19/0.6)] ${locked ? 'grayscale-[0.6]' : ''}`}>
               <img
                 src={img(c.image, 600)}
                 srcSet={imgSet(c.image, [360, 600, 900])}
@@ -179,8 +179,11 @@ export function CourseCard({ c }: { c: CourseSummary }) {
   const locked = label.tone === 'locked'
   const skills = c.skills ?? []
   return (
-    <li className="group relative flex flex-col border-b border-line pb-8">
-      <div className={`aspect-[16/10] overflow-hidden rounded-2xl bg-paper-deep ${locked ? 'grayscale-[0.6]' : ''}`}>
+    <li className="card group relative flex flex-col p-3 pb-6">
+      <div className={`relative aspect-[16/10] overflow-hidden rounded-[0.9rem] bg-paper-deep ${locked ? 'grayscale-[0.6]' : ''}`}>
+        <span className="absolute left-3 top-3 z-10 rounded-full bg-ink/85 px-3 py-1 text-xs font-medium text-signal backdrop-blur-sm">
+          Level {c.level}
+        </span>
         {c.image && (
           <img
             src={img(c.image, 640)}
@@ -192,26 +195,26 @@ export function CourseCard({ c }: { c: CourseSummary }) {
           />
         )}
       </div>
-      <div className="mt-5 flex flex-wrap items-center gap-2">
+      <div className="mt-5 flex flex-wrap items-center gap-2 px-3">
         <Badge tone={label.tone}>{label.text}</Badge>
         {c.category && <span className="text-xs uppercase tracking-[0.14em] text-muted">{c.category}</span>}
       </div>
-      <h3 className="display mt-3 text-2xl md:text-[1.9rem]">
+      <h3 className="display mt-3 px-3 text-2xl md:text-[1.9rem]">
         <Link to="/academy/courses/$slug" params={{ slug: c.slug }} className="after:absolute after:inset-0 group-hover:text-forest">
           {c.title}
         </Link>
       </h3>
-      <p className="mt-3 leading-relaxed text-ink-soft">{c.summary}</p>
+      <p className="mt-3 px-3 leading-relaxed text-ink-soft">{c.summary}</p>
       {skills.length > 0 && (
-        <p className="mt-4 text-sm leading-relaxed text-muted">
+        <p className="mt-4 px-3 text-sm leading-relaxed text-muted">
           <span className="font-medium text-ink">Skills you'll gain:</span> {skills.join(', ')}
         </p>
       )}
-      <p className="mt-auto flex items-baseline justify-between gap-4 pt-5 text-sm text-muted">
+      <p className="mx-3 mt-auto flex items-baseline justify-between gap-4 border-t border-line pt-5 text-sm text-muted">
         <span>
           Level {c.level} · {c.levelLabel} · {c.durationLabel ?? 'Duration to be announced'}
         </span>
-        <span className="shrink-0 font-medium text-ink">
+        <span className="shrink-0 text-base font-medium text-forest">
           <Price kobo={c.priceKobo} fallback="Price TBA" />
         </span>
       </p>

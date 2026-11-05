@@ -22,8 +22,9 @@ A multi-page marketing site built with TanStack Start, React 19 and Tailwind v4 
 
 - Tokens are in the `@theme` block of `src/styles.css`: paper/ink neutrals, a single forest-green accent, and a lime `signal` used sparingly on dark backgrounds.
 - Component classes: `.wrap`, `.eyebrow`, `.display`, `.serif` (italic accent words inside headings), `.btn` plus `-primary`, `-ghost` or `-signal`, `.link`, `.field`.
-- Section labels are not numbered: use `.eyebrow .eyebrow-mark` (a short accent rule before the label). In lists, use `.dot-mark` or `.tick` instead of 01/02 numbers, and `.chip` for tag lists. The owner asked for no numbering. Layouts are asymmetric 12-column grids with hairline borders. Avoid icon-card grids, gradients, glass effects and heavy motion.
-- Motion is limited to a single `.rise` entrance on first screens plus hover states, and it respects `prefers-reduced-motion`.
+- Section labels are not numbered: use `.eyebrow .eyebrow-mark` (a short gradient rule before the label). In lists, use `.orb`, `.dot-mark` or `.tick` instead of 01/02 numbers, and `.chip` for tag lists. The owner asked for no numbering.
+- The owner found the original site too plain and asked for a bolder look (Nov 2026), so gradients, glow and texture are now welcome. The bold layer at the end of `src/styles.css` adds film grain, a colour wash and grid behind every page's first section, glowing `section.bg-ink`/`section.bg-forest` panels, gradient buttons, `.card` / `.card-dark` / `.card-forest` surfaces, `.orb` markers, `.text-gradient` / `.text-gradient-signal` accent words, `.hl` highlighter, `.photo-frame`, `.rings` and `.wordmark`. Use these instead of inventing new effects. Keep one `.card-forest` feature card per group at most.
+- Motion: `.rise` entrance on first screens, scroll-in reveal for top-level sections (`Reveal` in `__root.tsx`), the `Marquee` ticker, `.float-slow`, and hover lifts. Everything respects `prefers-reduced-motion`, and content stays visible without JS.
 - Always serve images through `img()`/`imgSet()`, never the raw `/img/...` path.
 
 ## Nexora Digital Academy (`/academy`)

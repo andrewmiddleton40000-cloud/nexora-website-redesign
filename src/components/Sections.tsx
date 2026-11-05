@@ -47,25 +47,34 @@ export function SectionHead({
 /** Homepage overview: the four service categories with their lowest starting price. */
 export function CategoryIndex() {
   return (
-    <ol className="border-t border-ink">
-      {categories.map((c) => {
+    <ol className="grid gap-5 md:grid-cols-2">
+      {categories.map((c, i) => {
         const from = c.services.reduce((a, b) => (b.price < a.price ? b : a))
+        const feature = i === 0
         return (
-          <li key={c.id} className="group border-b border-line">
-            <Link to="/services" hash={c.id} className="grid gap-4 py-8 md:grid-cols-12 md:gap-10 md:py-10">
-              <span className="md:col-span-1 md:pt-4" aria-hidden="true">
-                <span className="dot-mark" />
+          <li key={c.id} className={`group card ${feature ? 'card-forest' : ''}`}>
+            <Link to="/services" hash={c.id} className="flex h-full flex-col p-7 md:p-10">
+              <span className="flex items-start justify-between gap-4">
+                <span className={`orb ${feature ? '' : 'orb-forest'}`} aria-hidden="true" />
+                <span
+                  className={`grid h-11 w-11 place-items-center rounded-full border text-lg transition-transform duration-300 group-hover:-rotate-45 ${
+                    feature ? 'border-paper/30' : 'border-line'
+                  }`}
+                  aria-hidden="true"
+                >
+                  →
+                </span>
               </span>
-              <h3 className="display text-[1.9rem] md:col-span-5 md:text-4xl transition-colors group-hover:text-forest">
+              <h3 className={`display mt-8 text-[2rem] md:text-[2.6rem] ${feature ? '' : 'transition-colors group-hover:text-forest'}`}>
                 {c.title}
               </h3>
-              <div className="md:col-span-4 md:pt-1.5">
-                <p className="text-lg leading-relaxed text-ink-soft">{c.intro}</p>
-                <p className="mt-3 text-sm text-muted">{c.services.map((s) => s.name).slice(0, 4).join(' · ')}…</p>
-              </div>
-              <p className="md:col-span-2 md:pt-2 md:text-right">
-                <span className="block text-xs uppercase tracking-[0.14em] text-muted">From</span>
-                <span className="mt-1 block text-xl font-medium tabular-nums">{formatPrice(from)}</span>
+              <p className={`mt-4 text-lg leading-relaxed ${feature ? 'text-paper/80' : 'text-ink-soft'}`}>{c.intro}</p>
+              <p className={`mt-3 mb-8 text-sm ${feature ? 'text-paper/60' : 'text-muted'}`}>
+                {c.services.map((s) => s.name).slice(0, 4).join(' · ')}…
+              </p>
+              <p className={`mt-auto flex items-baseline justify-between gap-4 border-t pt-5 ${feature ? 'border-paper/20' : 'border-line'}`}>
+                <span className={`text-xs uppercase tracking-[0.14em] ${feature ? 'text-paper/60' : 'text-muted'}`}>Starting from</span>
+                <span className={`text-2xl font-medium tabular-nums ${feature ? 'text-signal' : 'text-forest'}`}>{formatPrice(from)}</span>
               </p>
             </Link>
           </li>
@@ -158,30 +167,32 @@ export function PriceList() {
 /** The four main website packages, with the landing page as the entry point. */
 export function PackageGrid() {
   return (
-    <ol className="grid border-l border-t border-line sm:grid-cols-2 xl:grid-cols-4">
+    <ol className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
       {packages.map((p, i) => {
         const entry = i === 0
         return (
-          <li key={p.serviceId} className="lift flex flex-col border-b border-r border-line bg-white p-6 md:p-8">
+          <li key={p.serviceId} className={`card flex flex-col p-6 md:p-8 ${entry ? 'card-forest' : ''}`}>
             <p className="flex min-h-[1.6rem] items-center justify-between">
-              <span className="dot-mark" aria-hidden="true" />
-              {entry && <span className="rounded-full bg-forest-tint px-3 py-1 text-xs text-forest">Entry-level offer</span>}
+              <span className={`orb !h-8 !w-8 ${entry ? '' : 'orb-forest'}`} aria-hidden="true" />
+              {entry && <span className="rounded-full bg-signal px-3 py-1 text-xs font-medium text-ink">Entry-level offer</span>}
             </p>
-            <h3 className="display mt-5 text-[2rem]">{p.title}</h3>
-            <p className="mt-3 min-h-[4.5rem] leading-relaxed text-muted">{p.audience}</p>
-            <p className="mt-6 text-xs uppercase tracking-[0.14em] text-muted">Package price</p>
-            <p className="mt-1 text-3xl font-medium tabular-nums tracking-[-0.02em]">{formatPrice(p.service)}</p>
+            <h3 className="display mt-6 text-[2rem]">{p.title}</h3>
+            <p className={`mt-3 min-h-[4.5rem] leading-relaxed ${entry ? 'text-paper/75' : 'text-muted'}`}>{p.audience}</p>
+            <p className={`mt-6 text-xs uppercase tracking-[0.14em] ${entry ? 'text-paper/60' : 'text-muted'}`}>Package price</p>
+            <p className={`mt-1 text-[2.1rem] font-medium tabular-nums tracking-[-0.02em] ${entry ? 'text-signal' : 'text-forest'}`}>
+              {formatPrice(p.service)}
+            </p>
             <p className="mt-6 text-sm font-medium">Included</p>
-            <ul className="mt-3 flex-1 space-y-2 text-[0.95rem] text-ink-soft">
+            <ul className={`mt-3 flex-1 space-y-2 text-[0.95rem] ${entry ? 'text-paper/85' : 'text-ink-soft'}`}>
               {p.includes.map((item) => (
                 <li key={item} className="flex gap-3">
-                  <span className="mt-[0.7rem] inline-block h-px w-3 shrink-0 bg-forest" aria-hidden="true" />
+                  <span className={`tick !h-5 !w-5 !text-[0.65rem] ${entry ? '!bg-signal !text-ink' : ''}`} aria-hidden="true">✓</span>
                   {item}
                 </li>
               ))}
             </ul>
             <div className="mt-8">
-              <QuoteButtons service={p.service} />
+              <QuoteButtons service={p.service} tone={entry ? 'dark' : 'light'} />
             </div>
           </li>
         )
@@ -223,7 +234,7 @@ export function FAQList() {
           <details className="group">
             <summary className="flex cursor-pointer list-none items-baseline justify-between gap-6 py-6 text-xl font-medium tracking-[-0.015em] md:text-2xl [&::-webkit-details-marker]:hidden">
               {f.q}
-              <span className="text-forest transition-transform duration-200 group-open:rotate-45" aria-hidden="true">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-forest-tint text-forest transition-[transform,background-color,color] duration-200 group-open:rotate-45 group-open:bg-forest group-open:text-signal" aria-hidden="true">
                 +
               </span>
             </summary>
@@ -237,13 +248,12 @@ export function FAQList() {
 
 export function Benefits({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
   const dark = tone === 'dark'
-  const line = dark ? 'border-line-dark' : 'border-line'
   return (
-    <ul className={`grid border-t md:grid-cols-2 ${dark ? 'border-line-dark' : 'border-ink'}`}>
+    <ul className="grid gap-5 md:grid-cols-2">
       {benefits.map((b) => (
-        <li key={b.title} className={`border-b ${line} py-8 md:odd:pr-10 md:even:border-l md:even:pl-10`}>
-          <span className={`dot-mark ${dark ? 'dot-mark-signal' : ''}`} aria-hidden="true" />
-          <h3 className="mt-4 text-2xl font-medium tracking-[-0.02em]">{b.title}</h3>
+        <li key={b.title} className={`card ${dark ? 'card-dark' : ''} p-7 md:p-9`}>
+          <span className={`orb ${dark ? '' : 'orb-forest'}`} aria-hidden="true" />
+          <h3 className="mt-6 text-2xl font-medium tracking-[-0.02em]">{b.title}</h3>
           <p className={`mt-3 max-w-md leading-relaxed ${dark ? 'text-paper/65' : 'text-muted'}`}>{b.body}</p>
         </li>
       ))}
@@ -252,13 +262,12 @@ export function Benefits({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
 }
 
 export function Principles({ tone = 'dark' }: { tone?: 'light' | 'dark' }) {
-  const line = tone === 'dark' ? 'border-line-dark' : 'border-line'
   return (
-    <ul className={`grid border-t ${line} md:grid-cols-2 lg:grid-cols-3`}>
+    <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
       {principles.map((p) => (
-        <li key={p.title} className={`border-b ${line} py-8 md:pr-10`}>
-          <span className={`dot-mark ${tone === 'dark' ? 'dot-mark-signal' : ''}`} aria-hidden="true" />
-          <h3 className="mt-4 text-2xl font-medium tracking-[-0.02em]">{p.title}</h3>
+        <li key={p.title} className={`card ${tone === 'dark' ? 'card-dark' : ''} p-7 md:p-8`}>
+          <span className={`orb !h-9 !w-9 ${tone === 'dark' ? '' : 'orb-forest'}`} aria-hidden="true" />
+          <h3 className="mt-6 text-2xl font-medium tracking-[-0.02em]">{p.title}</h3>
           <p className={`mt-3 leading-relaxed ${tone === 'dark' ? 'text-paper/65' : 'text-muted'}`}>{p.body}</p>
         </li>
       ))}
@@ -270,10 +279,10 @@ export function Principles({ tone = 'dark' }: { tone?: 'light' | 'dark' }) {
 export function ProcessTimeline() {
   return (
     <ol className="relative grid gap-0 md:grid-cols-5">
-      <span className="absolute left-[0.4rem] top-2 bottom-2 w-px bg-line md:left-0 md:right-0 md:top-[0.4rem] md:bottom-auto md:h-px md:w-auto" aria-hidden="true" />
+      <span className="absolute left-[0.6rem] top-2 bottom-2 w-[3px] rounded-full bg-linear-to-b from-forest via-[#4f9a68] to-signal md:left-0 md:right-0 md:top-[0.55rem] md:bottom-auto md:h-[3px] md:w-auto md:bg-linear-to-r" aria-hidden="true" />
       {processSteps.map((step) => (
         <li key={step.number} className="relative pl-10 pb-10 md:pl-0 md:pr-8 md:pb-0">
-          <span className="absolute left-0 top-0 h-[0.85rem] w-[0.85rem] rounded-full border-2 border-forest bg-paper md:static md:block" aria-hidden="true" />
+          <span className="absolute left-0 top-0 block h-[1.35rem] w-[1.35rem] rounded-full border-[3px] border-paper bg-forest shadow-[0_0_0_3px_var(--color-forest-tint),0_8px_18px_-6px_rgb(31_75_58/0.7)] md:static" aria-hidden="true" />
           <h3 className="display mt-0 md:mt-8 text-3xl md:text-[2.1rem]">{step.title}</h3>
           <p className="mt-3 leading-relaxed text-muted">{step.body}</p>
         </li>
@@ -298,7 +307,9 @@ export function AudienceList() {
 function ProjectCard({ p, large }: { p: Project; large: boolean }) {
   return (
     <li className={`group ${large ? 'md:col-span-7' : 'md:col-span-5 md:mt-24'}`}>
-      <div className={`overflow-hidden rounded-2xl bg-paper-deep ${large ? 'aspect-[16/10]' : 'aspect-[4/3]'}`}>
+      <div
+        className={`overflow-hidden rounded-2xl bg-paper-deep shadow-[0_24px_50px_-30px_rgb(22_21_19/0.55)] ring-1 ring-line transition-shadow duration-500 group-hover:shadow-[0_0_0_2px_var(--color-forest),0_30px_60px_-28px_rgb(31_75_58/0.6)] ${large ? 'aspect-[16/10]' : 'aspect-[4/3]'}`}
+      >
         <img
           src={img(p.image, 1200)}
           srcSet={imgSet(p.image, [600, 900, 1200, 1600])}
@@ -327,7 +338,13 @@ function ProjectCard({ p, large }: { p: Project; large: boolean }) {
           </span>
         </p>
       )}
-      <p className="mt-3 text-sm text-muted">{p.services.join(' · ')}</p>
+      <ul className="mt-4 flex flex-wrap gap-2">
+        {p.services.map((sv) => (
+          <li key={sv} className="rounded-full bg-forest-tint px-3 py-1 text-xs text-forest">
+            {sv}
+          </li>
+        ))}
+      </ul>
       {p.url && (
         <a href={p.url} target="_blank" rel="noopener noreferrer" className="link mt-4 inline-block text-sm">
           Visit live site ↗
@@ -357,8 +374,8 @@ export function WorkShowcase({ limit, filterable = false }: { limit?: number; fi
               type="button"
               aria-pressed={active === c.id}
               onClick={() => setActive(c.id)}
-              className={`border px-4 py-2 text-sm transition-colors ${
-                active === c.id ? 'border-ink bg-ink text-paper' : 'border-line hover:border-ink'
+              className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                active === c.id ? 'border-forest bg-forest text-paper shadow-[0_8px_20px_-10px_rgb(31_75_58/0.8)]' : 'border-line bg-white hover:border-forest'
               }`}
             >
               {c.title}
@@ -431,11 +448,12 @@ function WorkEmptyState() {
 export function ClosingCTA() {
   return (
     <section className="bg-forest text-paper" aria-labelledby="cta-title">
+      <span className="rings -right-40 -top-40" aria-hidden="true" />
       <div className="wrap grid gap-12 py-24 md:grid-cols-12 md:py-36">
         <div className="md:col-span-8">
-          <p className="eyebrow !text-paper/60">Next step</p>
+          <p className="eyebrow eyebrow-mark !text-paper/60">Next step</p>
           <h2 id="cta-title" className="display mt-6 text-[2.9rem] md:text-7xl lg:text-[5.5rem]">
-            Let’s make your next digital move <span className="serif text-signal">count.</span>
+            Let’s make your next digital move <span className="serif text-gradient-signal pr-2">count.</span>
           </h2>
         </div>
         <div className="md:col-span-4 md:self-end">

@@ -30,9 +30,9 @@ function SchoolsPage() {
       <section className="bg-ink text-paper">
         <div className="wrap grid gap-12 pt-16 pb-20 md:grid-cols-12 md:pt-24 md:pb-28">
           <div className="md:col-span-7">
-            <p className="eyebrow rise !text-signal">School partnership programme</p>
+            <p className="eyebrow eyebrow-mark eyebrow-dark rise !text-signal">School partnership programme</p>
             <h1 className="display rise rise-2 mt-6 text-[2.8rem] md:text-7xl">
-              Partner With Nexora. <span className="serif text-signal">Prepare Your Students for the Digital Future.</span>
+              Partner With Nexora. <span className="serif text-gradient-signal pr-1">Prepare Your Students for the Digital Future.</span>
             </h1>
             <p className="rise rise-3 mt-8 max-w-xl text-lg leading-relaxed text-paper/75">
               We work with secondary schools to deliver organised, online digital education — so your students gain practical AI and technology skills without
@@ -51,7 +51,7 @@ function SchoolsPage() {
       </section>
 
       <section className="wrap py-24 md:py-32">
-        <SectionHead label="Partnership model" title={<>Clear roles. <span className="serif text-forest">Shared purpose.</span></>} />
+        <SectionHead label="Partnership model" title={<>Clear roles. <span className="serif text-gradient pr-1">Shared purpose.</span></>} />
         <div className="mt-16 grid gap-12 md:grid-cols-2">
           <div className="border-t border-ink pt-6">
             <p className="eyebrow">Nexora provides</p>
@@ -104,7 +104,7 @@ function SchoolsPage() {
         <div className="md:col-span-5">
           <p className="eyebrow eyebrow-mark">For school leaders</p>
           <h2 className="display mt-5 text-4xl md:text-5xl">
-            What your school <span className="serif text-forest">receives.</span>
+            What your school <span className="serif text-gradient pr-1">receives.</span>
           </h2>
           <ul className="mt-8 space-y-4 border-t border-ink pt-6 leading-relaxed">
             <li>A private school dashboard showing registrations, enrolments, cohorts and progress for your own students only.</li>
@@ -128,7 +128,7 @@ function SchoolsPage() {
           <div className="md:col-span-4">
             <p className="eyebrow eyebrow-mark">Enquire</p>
             <h2 className="display mt-5 text-4xl md:text-5xl">
-              Start a <span className="serif text-forest">conversation.</span>
+              Start a <span className="serif text-gradient pr-1">conversation.</span>
             </h2>
             <p className="mt-6 leading-relaxed text-muted">Tell us about your school. We reply to every enquiry from a school representative.</p>
           </div>

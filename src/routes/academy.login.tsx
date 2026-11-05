@@ -71,7 +71,7 @@ function Login() {
       <div className="md:col-span-5">
         <p className="eyebrow">Academy account</p>
         <h1 className="display mt-6 text-5xl md:text-6xl">
-          {titles[mode][0]} <span className="serif text-forest">{titles[mode][1]}</span>
+          {titles[mode][0]} <span className="serif text-gradient pr-1">{titles[mode][1]}</span>
         </h1>
         <p className="mt-6 leading-relaxed text-muted">Students, parents’ registered learners, school representatives and Nexora staff all sign in here.</p>
       </div>

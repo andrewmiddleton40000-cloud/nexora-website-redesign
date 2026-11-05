@@ -13,7 +13,7 @@ function VerifyForm() {
   const nav = useNavigate()
   return (
     <>
-      <PageIntro eyebrow="Certificate verification" title={<>Check a Nexora <span className="serif text-forest">certificate.</span></>} intro="Enter the verification code or certificate number printed on the certificate." />
+      <PageIntro eyebrow="Certificate verification" title={<>Check a Nexora <span className="serif text-gradient pr-1">certificate.</span></>} intro="Enter the verification code or certificate number printed on the certificate." />
       <section className="wrap pb-24">
         <form className="flex max-w-xl flex-col gap-6 border-t border-ink pt-8 sm:flex-row sm:items-end" onSubmit={(e) => { e.preventDefault(); if (code.trim()) nav({ to: '/academy/verify/$code', params: { code: code.trim().toUpperCase() } }) }}>
           <Field label="Verification code or certificate number" htmlFor="v-code" className="flex-1">

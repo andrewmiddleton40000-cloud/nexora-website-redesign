@@ -31,9 +31,9 @@ function EnquiryPage() {
   return (
     <section className="wrap grid gap-16 pt-16 pb-24 md:pt-24 md:pb-32 lg:grid-cols-12 lg:gap-12">
       <div className="lg:col-span-5">
-        <p className="eyebrow rise">Project enquiry</p>
+        <p className="eyebrow eyebrow-mark rise">Project enquiry</p>
         <h1 className="display rise rise-2 mt-6 text-[3rem] md:text-7xl">
-          Tell us what you <span className="serif text-forest">want to build.</span>
+          Tell us what you <span className="serif text-gradient pr-1">want to build.</span>
         </h1>
         <p className="rise rise-3 mt-8 max-w-md text-lg leading-relaxed text-ink-soft">
           Share a few details about your business and project. We’ll come back to you with questions or a tailored

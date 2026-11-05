@@ -11,7 +11,7 @@ export const Route = createFileRoute('/academy/safeguarding')({
 function Safeguarding() {
   return (
     <>
-      <PageIntro eyebrow="Safeguarding & privacy" title={<>Safe learning, <span className="serif text-forest">by design.</span></>} intro="Many of our learners are secondary-school students. These are the commitments we make to them, their families and their schools." />
+      <PageIntro eyebrow="Safeguarding & privacy" title={<>Safe learning, <span className="serif text-gradient pr-1">by design.</span></>} intro="Many of our learners are secondary-school students. These are the commitments we make to them, their families and their schools." />
       <section className="wrap pb-20">
         <ol className="border-t border-ink">
           {safeguarding.map((s) => (

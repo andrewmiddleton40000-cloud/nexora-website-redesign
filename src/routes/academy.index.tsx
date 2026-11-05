@@ -32,9 +32,9 @@ function AcademyHome() {
       <section className="relative overflow-hidden bg-ink text-paper">
         <div className="wrap grid gap-12 pt-16 pb-16 md:grid-cols-12 md:pt-24 md:pb-24">
           <div className="md:col-span-7 md:self-center">
-            <p className="eyebrow rise !text-signal">{academy.tagline}</p>
+            <p className="eyebrow eyebrow-mark eyebrow-dark rise !text-signal">{academy.tagline}</p>
             <h1 className="display rise rise-2 mt-6 text-[3rem] leading-[0.95] md:text-7xl lg:text-[5.6rem]">
-              Learn the digital skills <span className="serif text-signal">shaping tomorrow.</span>
+              Learn the digital skills <span className="serif text-gradient-signal pr-1">shaping tomorrow.</span>
             </h1>
             <p className="rise rise-3 mt-8 max-w-xl text-lg leading-relaxed text-paper/75">
               Develop practical skills in artificial intelligence, coding and digital innovation through structured learning, expert instruction and
@@ -50,7 +50,9 @@ function AcademyHome() {
             </div>
           </div>
           <div className="rise rise-2 md:col-span-5">
-            <div className="aspect-[4/5] overflow-hidden bg-ink-soft md:aspect-[4/5]">
+            <div className="relative">
+            <span className="absolute -right-6 -top-6 h-40 w-40 rounded-full bg-[radial-gradient(circle_at_30%_30%,#eef7c2,var(--color-signal)_45%,#4f9a68)] opacity-80 blur-[1px]" aria-hidden="true" />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-ink-soft ring-1 ring-paper/15 shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)] md:aspect-[4/5]">
               <img
                 src={img('academy/hero.jpg', 900)}
                 srcSet={imgSet('academy/hero.jpg', [480, 720, 960, 1260])}
@@ -60,9 +62,10 @@ function AcademyHome() {
                 className="h-full w-full object-cover"
               />
             </div>
+            </div>
           </div>
         </div>
-        <div className="border-t border-line-dark">
+        <div className="border-t border-line-dark bg-paper/[0.03]">
           <dl className="wrap grid grid-cols-2 gap-6 py-8 text-sm md:grid-cols-4">
             {[
               ['5', 'progressive levels'],
@@ -71,7 +74,7 @@ function AcademyHome() {
               ['Verifiable', 'certificates of completion'],
             ].map(([a, b]) => (
               <div key={b}>
-                <dt className="text-2xl font-medium tracking-[-0.02em] text-paper">{a}</dt>
+                <dt className="text-gradient-signal text-3xl font-medium tracking-[-0.02em]">{a}</dt>
                 <dd className="mt-1 text-paper/60">{b}</dd>
               </div>
             ))}
@@ -85,13 +88,14 @@ function AcademyHome() {
           label="The Academy"
           title={
             <>
-              A practical school for the <span className="serif text-forest">digital age.</span>
+              A practical school for the <span className="serif text-gradient pr-1">digital age.</span>
             </>
           }
           intro={`${academy.name} is the education arm of Nexora Technologies. We bring the same practical, problem-first thinking we use to build digital systems for businesses into structured courses for learners — starting with complete beginners.`}
         />
         <div className="mt-16 grid gap-10 md:grid-cols-12">
-          <div className="aspect-[3/2] overflow-hidden rounded-2xl bg-paper-deep md:col-span-7">
+          <div className="photo-frame md:col-span-7">
+          <div className="aspect-[3/2] overflow-hidden rounded-2xl bg-paper-deep">
             <img
               src={img('academy/instructor.jpg', 1000)}
               srcSet={imgSet('academy/instructor.jpg', [480, 800, 1200])}
@@ -100,6 +104,7 @@ function AcademyHome() {
               loading="lazy"
               className="h-full w-full object-cover"
             />
+          </div>
           </div>
           <div className="space-y-6 text-lg leading-relaxed text-ink-soft md:col-span-4 md:col-start-9 md:self-end">
             <p>
@@ -118,12 +123,12 @@ function AcademyHome() {
       <section className="border-t border-line bg-white">
         <div className="wrap py-24 md:py-32">
           <SectionHead label="Why learn with Nexora" title={<>Serious about learning. <span className="serif">Welcoming to beginners.</span></>} />
-          <ol className="mt-16 grid border-t border-ink md:grid-cols-3">
-            {reasons.map((r) => (
-              <li key={r.title} className="border-b border-line py-8 md:px-8 md:[&:nth-child(3n+1)]:pl-0 md:[&:not(:nth-child(3n))]:border-r">
-                <span className="dot-mark" aria-hidden="true" />
+          <ol className="mt-16 grid gap-5 md:grid-cols-3">
+            {reasons.map((r, i) => (
+              <li key={r.title} className={`card p-7 md:p-8 ${i === 0 ? 'card-forest' : ''}`}>
+                <span className={`orb !h-9 !w-9 ${i === 0 ? '' : 'orb-forest'}`} aria-hidden="true" />
                 <h3 className="mt-4 text-xl font-medium tracking-[-0.01em]">{r.title}</h3>
-                <p className="mt-3 leading-relaxed text-muted">{r.body}</p>
+                <p className={`mt-3 leading-relaxed ${i === 0 ? 'text-paper/75' : 'text-muted'}`}>{r.body}</p>
               </li>
             ))}
           </ol>
@@ -136,18 +141,20 @@ function AcademyHome() {
           label="Courses"
           title={
             <>
-              Five levels. <span className="serif text-forest">One clear path.</span>
+              Five levels. <span className="serif text-gradient pr-1">One clear path.</span>
             </>
           }
           intro="Start with AI & Prompt Engineering. Each later level opens once your completion of the previous level has been verified, and is enrolled separately."
         />
-        <ol className="mt-16 border-t border-ink">
+        <ol className="mt-16 space-y-4">
           {featured.map((c) => {
             const label = availabilityLabel(c)
             return (
-              <li key={c.slug} className="group border-b border-line">
-                <div className="grid gap-4 py-8 md:grid-cols-12 md:items-center md:gap-10">
-                  <span className="text-sm tabular-nums text-muted md:col-span-1">L{c.level}</span>
+              <li key={c.slug} className="card group">
+                <div className="grid gap-4 p-6 md:grid-cols-12 md:items-center md:gap-10 md:p-8">
+                  <span className="grid h-14 w-14 place-items-center rounded-full bg-linear-to-br from-forest to-forest-deep text-lg font-medium tabular-nums text-signal shadow-[0_10px_24px_-10px_rgb(31_75_58/0.8)] md:col-span-1">
+                    L{c.level}
+                  </span>
                   <div className="md:col-span-6">
                     <Link to="/academy/courses/$slug" params={{ slug: c.slug }} className="display text-[1.9rem] transition-colors group-hover:text-forest md:text-4xl">
                       {c.title}
@@ -177,11 +184,11 @@ function AcademyHome() {
       {/* 5 — Learning approach */}
       <section className="bg-ink text-paper">
         <div className="wrap py-24 md:py-32">
-          <SectionHead tone="dark" label="Our learning approach" title={<>Learn it. Practise it. <span className="serif text-signal">Build with it.</span></>} />
+          <SectionHead tone="dark" label="Our learning approach" title={<>Learn it. Practise it. <span className="serif text-gradient-signal pr-1">Build with it.</span></>} />
           <div className="mt-16 grid gap-12 md:grid-cols-12">
             <ol className="grid gap-px bg-line-dark sm:grid-cols-2 md:col-span-7">
               {approach.map((a) => (
-                <li key={a.title} className="bg-ink p-8">
+                <li key={a.title} className="bg-ink p-8 transition-colors hover:bg-ink-soft">
                   <span className="dot-mark dot-mark-signal" aria-hidden="true" />
                   <h3 className="mt-6 text-2xl font-medium">{a.title}</h3>
                   <p className="mt-3 leading-relaxed text-paper/65">{a.body}</p>
@@ -189,7 +196,7 @@ function AcademyHome() {
               ))}
             </ol>
             <div className="md:col-span-5">
-              <div className="aspect-[4/5] overflow-hidden bg-ink-soft">
+              <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-ink-soft ring-1 ring-paper/15">
                 <img
                   src={img('academy/online-class.jpg', 800)}
                   srcSet={imgSet('academy/online-class.jpg', [480, 800, 1000])}
@@ -206,11 +213,11 @@ function AcademyHome() {
 
       {/* 6 — How learning works */}
       <section className="wrap py-24 md:py-32">
-        <SectionHead label="How learning works" title={<>From registration to <span className="serif text-forest">certificate.</span></>} />
-        <ol className="mt-16 grid gap-0 border-t border-ink md:grid-cols-5">
+        <SectionHead label="How learning works" title={<>From registration to <span className="serif text-gradient pr-1">certificate.</span></>} />
+        <ol className="mt-16 grid gap-4 md:grid-cols-5">
           {howItWorks.map((s) => (
-            <li key={s.number} className="border-b border-line py-8 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0">
-              <span className="dot-mark" aria-hidden="true" />
+            <li key={s.number} className="card p-6">
+              <span className="orb orb-forest !h-8 !w-8" aria-hidden="true" />
               <h3 className="mt-6 text-lg font-medium">{s.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
             </li>
@@ -220,11 +227,12 @@ function AcademyHome() {
 
       {/* 7 — School partnerships */}
       <section className="border-t border-line bg-forest text-paper">
+        <span className="rings -bottom-60 -left-60" aria-hidden="true" />
         <div className="wrap grid gap-12 py-24 md:grid-cols-12 md:py-32">
           <div className="md:col-span-6">
             <p className="eyebrow eyebrow-mark !text-paper/60">For schools</p>
             <h2 className="display mt-6 text-[2.6rem] md:text-6xl">
-              Bring digital skills to your <span className="serif text-signal">whole year group.</span>
+              Bring digital skills to your <span className="serif text-gradient-signal pr-1">whole year group.</span>
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-paper/75">
               We partner with secondary schools to deliver organised online classes. Nexora provides the teaching; your school coordinates participation.
@@ -257,11 +265,11 @@ function AcademyHome() {
 
       {/* 8 — Testimonials */}
       <section className="wrap py-24 md:py-32">
-        <SectionHead label="Learner voices" title={<>In their <span className="serif text-forest">own words.</span></>} />
+        <SectionHead label="Learner voices" title={<>In their <span className="serif text-gradient pr-1">own words.</span></>} />
         {testimonials.length ? (
           <ul className="mt-16 grid gap-10 md:grid-cols-3">
             {testimonials.map((t) => (
-              <li key={t.id} className="border-t border-ink pt-6">
+              <li key={t.id} className="card p-7">
                 <blockquote className="serif text-2xl leading-snug">“{t.quote}”</blockquote>
                 <p className="mt-6 text-sm font-medium">{t.name}</p>
                 {t.context && <p className="text-sm text-muted">{t.context}</p>}
@@ -269,9 +277,9 @@ function AcademyHome() {
             ))}
           </ul>
         ) : (
-          <div className="mt-16 grid gap-8 border-t border-ink pt-8 md:grid-cols-12">
+          <div className="card card-forest mt-16 grid gap-8 p-8 md:grid-cols-12 md:p-12">
             <p className="serif text-3xl leading-snug md:col-span-7">Our first cohorts are getting started.</p>
-            <p className="leading-relaxed text-muted md:col-span-5">
+            <p className="leading-relaxed text-paper/75 md:col-span-5">
               We publish learner and parent feedback only with their written permission, so this space will fill with real stories as our first learners
               complete their courses. We will never use invented testimonials.
             </p>
@@ -291,9 +299,9 @@ function AcademyHome() {
       <section className="bg-ink text-paper">
         <div className="wrap grid gap-12 py-24 md:grid-cols-12 md:py-32">
           <div className="md:col-span-8">
-            <p className="eyebrow !text-paper/55">Start learning</p>
+            <p className="eyebrow eyebrow-mark !text-paper/55">Start learning</p>
             <h2 className="display mt-6 text-[2.9rem] md:text-7xl">
-              Your first level starts with <span className="serif text-signal">one good prompt.</span>
+              Your first level starts with <span className="serif text-gradient-signal pr-1">one good prompt.</span>
             </h2>
           </div>
           <div className="md:col-span-4 md:self-end">
@@ -328,7 +336,7 @@ function Faq() {
               onClick={() => setOpen(open === i ? null : i)}
             >
               {f.q}
-              <span className="text-muted" aria-hidden="true">
+              <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors ${open === i ? 'bg-forest text-signal' : 'bg-forest-tint text-forest'}`} aria-hidden="true">
                 {open === i ? '−' : '+'}
               </span>
             </button>

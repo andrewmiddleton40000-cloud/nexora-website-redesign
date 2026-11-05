@@ -31,7 +31,7 @@ function AcademyContact() {
   }
   return (
     <>
-      <PageIntro eyebrow="Academy contact" title={<>Questions about learning? <span className="serif text-forest">Ask us.</span></>} intro="Learners, parents, guardians and schools can reach the Academy team here. For quick questions, WhatsApp is usually fastest." />
+      <PageIntro eyebrow="Academy contact" title={<>Questions about learning? <span className="serif text-gradient pr-1">Ask us.</span></>} intro="Learners, parents, guardians and schools can reach the Academy team here. For quick questions, WhatsApp is usually fastest." />
       <section className="wrap grid gap-14 pb-24 md:grid-cols-12">
         <aside className="space-y-8 md:col-span-4">
           <div className="border-t border-ink pt-5">

@@ -93,8 +93,8 @@ export function ProgressBar({ value, label }: { value: number; label?: string })
   const v = Math.max(0, Math.min(100, Math.round(value)))
   return (
     <div>
-      <div className="h-1.5 w-full bg-line" role="progressbar" aria-valuenow={v} aria-valuemin={0} aria-valuemax={100} aria-label={label ?? 'Progress'}>
-        <div className="h-full bg-forest transition-[width] duration-500" style={{ width: `${v}%` }} />
+      <div className="h-2 w-full overflow-hidden rounded-full bg-line/70" role="progressbar" aria-valuenow={v} aria-valuemin={0} aria-valuemax={100} aria-label={label ?? 'Progress'}>
+        <div className="h-full rounded-full bg-linear-to-r from-forest via-[#4f9a68] to-signal transition-[width] duration-500" style={{ width: `${v}%` }} />
       </div>
     </div>
   )
@@ -112,7 +112,7 @@ export function PageIntro({ eyebrow, title, intro, children }: { eyebrow: string
     <section className="wrap pt-14 pb-14 md:pt-20 md:pb-20">
       <div className="grid gap-10 md:grid-cols-12">
         <div className="md:col-span-8">
-          <p className="eyebrow rise">{eyebrow}</p>
+          <p className="eyebrow eyebrow-mark rise">{eyebrow}</p>
           <h1 className="display rise rise-2 mt-6 text-[2.75rem] md:text-7xl">{title}</h1>
         </div>
         {intro && <div className="rise rise-3 text-lg leading-relaxed text-ink-soft md:col-span-4 md:self-end">{intro}</div>}
@@ -169,7 +169,7 @@ export function RichText({ text }: { text: string }) {
 
 export function EmptyState({ title, children }: { title: string; children?: ReactNode }) {
   return (
-    <div className="border border-dashed border-line p-8">
+    <div className="rounded-2xl border border-dashed border-forest/40 bg-forest-tint/40 p-8">
       <p className="font-medium">{title}</p>
       {children && <div className="mt-2 text-sm leading-relaxed text-muted">{children}</div>}
     </div>
@@ -186,9 +186,9 @@ export function BackLink({ to, children, params }: { to: string; children: React
 
 export function Stat({ label, value, note }: { label: string; value: ReactNode; note?: ReactNode }) {
   return (
-    <div className="border-t border-ink pt-4">
+    <div className="card p-5">
       <p className="eyebrow">{label}</p>
-      <p className="mt-3 text-3xl font-medium tabular-nums tracking-[-0.03em]">{value}</p>
+      <p className="mt-3 text-3xl font-medium tabular-nums tracking-[-0.03em] text-forest">{value}</p>
       {note && <p className="mt-1 text-sm text-muted">{note}</p>}
     </div>
   )

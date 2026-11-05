@@ -63,7 +63,7 @@ function Register() {
       <section className="wrap py-24 md:py-32">
         <p className="eyebrow">Almost there</p>
         <h1 className="display mt-6 max-w-3xl text-5xl md:text-6xl">
-          Check your inbox to <span className="serif text-forest">confirm your email.</span>
+          Check your inbox to <span className="serif text-gradient pr-1">confirm your email.</span>
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
           We sent a confirmation link to <strong className="text-ink">{done}</strong>. Open it to activate your account, then sign in. If it does not arrive within a few minutes, check your spam folder.
@@ -74,7 +74,7 @@ function Register() {
 
   return (
     <>
-      <PageIntro eyebrow="Learner registration" title={<>Create your <span className="serif text-forest">Academy account.</span></>} intro={<>Already registered? <Link to="/academy/login" className="link">Sign in</Link>.</>} />
+      <PageIntro eyebrow="Learner registration" title={<>Create your <span className="serif text-gradient pr-1">Academy account.</span></>} intro={<>Already registered? <Link to="/academy/login" className="link">Sign in</Link>.</>} />
       <section className="wrap pb-24">
         <form onSubmit={submit} className="grid gap-14 md:grid-cols-12">
           <fieldset disabled={pending} className="grid gap-8 disabled:opacity-70 md:col-span-8 md:grid-cols-2">

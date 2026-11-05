@@ -45,7 +45,7 @@ function Callback() {
       {result && (
         <>
           <h1 className="display mt-6 text-5xl md:text-6xl">
-            {result.status === 'success' ? <>Payment confirmed. <span className="serif text-forest">Welcome aboard.</span></> : result.status === 'failed' ? 'Payment was not successful.' : 'We are still confirming your payment.'}
+            {result.status === 'success' ? <>Payment confirmed. <span className="serif text-gradient pr-1">Welcome aboard.</span></> : result.status === 'failed' ? 'Payment was not successful.' : 'We are still confirming your payment.'}
           </h1>
           <dl className="mt-10 grid gap-6 border-t border-ink pt-6 sm:grid-cols-3">
             <div><dt className="text-sm text-muted">Course</dt><dd className="mt-1 font-medium">{result.course?.title}</dd></div>
