@@ -14,15 +14,15 @@ A multi-page marketing site built with TanStack Start, React 19 and Tailwind v4 
 
 ## Content rules (important)
 
-- Never invent clients, projects, metrics, testimonials, logos, emails, phone numbers, addresses, social profiles, team bios or company history. `site.email` and `site.socials` stay empty until the owner provides real values, and the UI hides them while they are empty.
+- Never invent clients, projects, metrics, testimonials, logos, emails, phone numbers, addresses, social profiles, team bios or company history. `site.email` stays empty until the owner provides a real value, and the UI hides it while empty. `site.socials` holds only owner-provided profiles (currently YouTube, Substack and Telegram). `SocialLinks` renders WhatsApp and phone as logo buttons first, then the socials.
 - Projects need `kind: 'internal'` for demos and personal work, and the UI labels them that way.
-- The photos in `public/img/` are illustrative and AI-generated. Don't caption or describe them as clients or staff.
+- The photos in `public/img/` are free-licence Unsplash stock photography (real photos, not clients or staff). The owner wants a mix of races and no photos of white men; check any new photo against this. Don't caption or describe them as clients, staff or projects. Ad slots ("Sponsored") were removed at the owner's request.
 
 ## Design conventions
 
 - Tokens are in the `@theme` block of `src/styles.css`: paper/ink neutrals, a single forest-green accent, and a lime `signal` used sparingly on dark backgrounds.
 - Component classes: `.wrap`, `.eyebrow`, `.display`, `.serif` (italic accent words inside headings), `.btn` plus `-primary`, `-ghost` or `-signal`, `.link`, `.field`.
-- Section labels are numbered, e.g. "(02) Services". Layouts are asymmetric 12-column grids with hairline borders. Avoid icon-card grids, gradients, glass effects and heavy motion.
+- Section labels are not numbered: use `.eyebrow .eyebrow-mark` (a short accent rule before the label). In lists, use `.dot-mark` or `.tick` instead of 01/02 numbers, and `.chip` for tag lists. The owner asked for no numbering. Layouts are asymmetric 12-column grids with hairline borders. Avoid icon-card grids, gradients, glass effects and heavy motion.
 - Motion is limited to a single `.rise` entrance on first screens plus hover states, and it respects `prefers-reduced-motion`.
 - Always serve images through `img()`/`imgSet()`, never the raw `/img/...` path.
 
@@ -32,6 +32,7 @@ A multi-page marketing site built with TanStack Start, React 19 and Tailwind v4 
 - Server functions: `src/server/fns/*.ts`. Each handler calls `requireUser`/`requireRole` itself; route guards are UX only. Shared rules: `src/server/learning.ts` (eligibility, access, progress), `src/server/payments.ts`, `src/server/finance.ts`.
 - Throw `AppError` for messages users may see. `src/start.ts` replaces every other error with a generic message.
 - **Confidential:** institutional allocation data (`school_agreements`, `school_allocations`, `reconciliation_statements`) may only be read in `src/server/finance.ts`, `src/server/fns/finance.ts` (FINANCE roles) and `schoolReconciliation` (authorised reps, released statements only). Never hard-code the allocation amount anywhere: the repo is public, and admin JS chunks are publicly downloadable.
+- Payments are bank transfer only at the owner's request (`ONLINE_PAYMENTS_ENABLED = false` in `src/server/payments.ts`; gateway code is kept but switched off). Bank details are entered by staff in the Academy admin, Payments tab.
 - Never mark a payment successful except through `markPaymentSuccess` after server-side gateway verification, or after staff confirm a credit on the bank statement.
 - Course seed content lives in `src/data/academy.ts` and is inserted once (`ensureSeeded`). After that, the admin panel is the source of truth.
 - Testimonials are DB-managed and are published only with consent. Never add invented ones.

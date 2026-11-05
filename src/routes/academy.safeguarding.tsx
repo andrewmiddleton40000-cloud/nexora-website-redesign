@@ -14,9 +14,9 @@ function Safeguarding() {
       <PageIntro eyebrow="Safeguarding & privacy" title={<>Safe learning, <span className="serif text-forest">by design.</span></>} intro="Many of our learners are secondary-school students. These are the commitments we make to them, their families and their schools." />
       <section className="wrap pb-20">
         <ol className="border-t border-ink">
-          {safeguarding.map((s, i) => (
+          {safeguarding.map((s) => (
             <li key={s.title} className="grid gap-4 border-b border-line py-8 md:grid-cols-12 md:gap-10">
-              <span className="text-sm tabular-nums text-muted md:col-span-1">0{i + 1}</span>
+              <span className="md:col-span-1 md:pt-2.5" aria-hidden="true"><span className="dot-mark" /></span>
               <h2 className="text-2xl font-medium tracking-[-0.01em] md:col-span-4">{s.title}</h2>
               <p className="text-lg leading-relaxed text-ink-soft md:col-span-7">{s.body}</p>
             </li>
@@ -29,7 +29,7 @@ function Safeguarding() {
           <div className="space-y-5 text-lg leading-relaxed text-ink-soft md:col-span-8">
             <p><strong className="font-medium text-ink">What we collect:</strong> name, email, phone number, country, school (optional), course choice, age group (under 18 or adult) and, for minors, a parent or guardian’s name, relationship and contact details. We also store your course activity — lessons completed, submissions, assessment results and attendance — to run the course and issue certificates.</p>
             <p><strong className="font-medium text-ink">Who can see it:</strong> you; authorised Nexora staff; your instructor (for learners in their class); and, if you joined through a partner school, that school’s representatives can see your name, course and progress — never your contact details or payments.</p>
-            <p><strong className="font-medium text-ink">Payments:</strong> card payments are handled by our payment provider. We never see or store card numbers.</p>
+            <p><strong className="font-medium text-ink">Payments:</strong> course fees are paid by bank transfer directly to Nexora Technologies’ business account. We never ask for card numbers, PINs or online banking passwords.</p>
             <p><strong className="font-medium text-ink">Your choices:</strong> you, or your parent or guardian, can ask us to correct or delete your information at any time through the <Link to="/academy/contact" className="link">Academy contact page</Link>.</p>
             <p><strong className="font-medium text-ink">Reporting a concern:</strong> if you are worried about the safety or wellbeing of a learner, contact us and choose “Safeguarding concern”. If someone is in immediate danger, contact the emergency services first.</p>
           </div>

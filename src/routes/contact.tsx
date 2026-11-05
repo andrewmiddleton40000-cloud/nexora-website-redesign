@@ -2,6 +2,7 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { img, imgSet, site } from '@/data/site'
 import { seo } from '@/lib/seo'
 import { WhatsAppIcon } from '@/components/WhatsApp'
+import { PhoneIcon, SocialLinks } from '@/components/SocialIcons'
 
 export const Route = createFileRoute('/contact')({
   head: () =>
@@ -63,7 +64,8 @@ function ContactPage() {
                 {...(m.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className={`btn mt-6 self-start ${m.label === 'WhatsApp' ? 'btn-whatsapp' : 'btn-ghost'}`}
               >
-                {m.label === 'WhatsApp' && <WhatsAppIcon />} {m.cta}
+                {m.label === 'WhatsApp' && <WhatsAppIcon />}
+                {m.label === 'Phone' && <PhoneIcon />} {m.cta}
               </a>
             </li>
           ))}
@@ -79,26 +81,21 @@ function ContactPage() {
           </li>
         </ul>
 
-        {site.socials.length > 0 && (
-          <p className="mt-10 flex flex-wrap gap-4 text-sm">
-            {site.socials.map((s) => (
-              <a key={s.href} className="link" href={s.href} target="_blank" rel="noopener noreferrer">
-                {s.label}
-              </a>
-            ))}
-          </p>
-        )}
+        <div className="mt-10 flex flex-wrap items-center gap-5">
+          <p className="eyebrow">Follow Nexora</p>
+          <SocialLinks contact={false} />
+        </div>
       </section>
 
       <section className="border-t border-line bg-white">
         <div className="wrap grid gap-12 py-20 md:grid-cols-12 md:py-28">
           <div className="md:col-span-5">
-            <div className="aspect-[4/3] overflow-hidden bg-paper-deep">
+            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-paper-deep">
               <img
                 src={img('office.jpg', 900)}
                 srcSet={imgSet('office.jpg', [480, 768, 960])}
                 sizes="(min-width: 768px) 38vw, 100vw"
-                alt="An office desk with a monitor showing a simple customer pipeline board, a desk phone and stacked folders"
+                alt="Two colleagues in conversation at a table by an office window"
                 loading="lazy"
                 className="h-full w-full object-cover"
               />

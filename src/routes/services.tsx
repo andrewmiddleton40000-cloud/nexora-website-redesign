@@ -66,35 +66,11 @@ function ServicesPage() {
         </div>
       </section>
 
-      <section className="border-t border-line bg-white py-16 md:py-20">
-        <div className="wrap">
-          <div className="mb-8">
-            <p className="eyebrow">Sponsored</p>
-          </div>
-
-          <div className="rounded-2xl border border-line bg-paper p-4 md:p-6">
-            <ins
-              className="adsbygoogle"
-              style={{ display: 'block' }}
-              data-ad-client="ca-pub-8737940076208275"
-              data-ad-slot="YOUR_SLOT_ID"
-              data-ad-format="auto"
-              data-full-width-responsive="true"
-            />
-
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `(adsbygoogle = window.adsbygoogle || []).push({});`,
-              }}
-            />
-          </div>
-        </div>
-      </section>
 
       <section id="packages" className="border-t border-line bg-paper-deep/50 py-24 md:py-32" aria-labelledby="packages-title">
         <div className="wrap">
           <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-            <p className="eyebrow md:col-span-3 md:pt-3">(01) Website packages</p>
+            <p className="eyebrow eyebrow-mark md:col-span-3 md:pt-3">Website packages</p>
             <div className="md:col-span-9">
               <h2 id="packages-title" className="display text-[2.6rem] md:text-6xl max-w-4xl">
                 Four packages. <span className="serif">Exactly what’s included.</span>
@@ -114,7 +90,7 @@ function ServicesPage() {
       <section id="pricing" className="border-t border-line py-24 md:py-32" aria-labelledby="pricing-title">
         <div className="wrap">
           <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-            <p className="eyebrow md:col-span-3 md:pt-3">(02) Full price list</p>
+            <p className="eyebrow eyebrow-mark md:col-span-3 md:pt-3">Full price list</p>
             <div className="md:col-span-9">
               <h2 id="pricing-title" className="display text-[2.6rem] md:text-6xl max-w-4xl">
                 Every service, <span className="serif">with its starting price.</span>
@@ -135,7 +111,7 @@ function ServicesPage() {
 
       <section className="py-24 md:py-32" aria-label="How we deliver">
         <div className="wrap">
-          <SectionHead index="03" label="How we deliver" title={<>Five stages, <span className="serif">agreed up front.</span></>} />
+          <SectionHead label="How we deliver" title={<>Five stages, <span className="serif">agreed up front.</span></>} />
           <div className="mt-16">
             <ProcessTimeline />
           </div>
@@ -145,7 +121,7 @@ function ServicesPage() {
       <section id="faq" className="border-t border-line bg-white py-24 md:py-32" aria-labelledby="faq-title">
         <div className="wrap grid gap-12 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-4">
-            <p className="eyebrow">(04) Questions</p>
+            <p className="eyebrow eyebrow-mark">Questions</p>
             <h2 id="faq-title" className="display mt-6 text-[2.6rem] md:text-5xl">
               Pricing and project <span className="serif">questions.</span>
             </h2>

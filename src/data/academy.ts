@@ -55,7 +55,7 @@ export const approach = [
 
 export const howItWorks = [
   { number: '01', title: 'Create an account', body: 'Register with your details. Learners under 18 add a parent or guardian, who must give consent.' },
-  { number: '02', title: 'Choose and pay for your course', body: 'Pay securely online or by bank transfer. Access opens only after the payment is verified.' },
+  { number: '02', title: 'Choose and pay for your course', body: 'Pay by bank transfer using your personal payment reference. Access opens once our team confirms the transfer.' },
   { number: '03', title: 'Join your cohort', body: 'You are placed in a class group with scheduled live sessions and a named instructor.' },
   { number: '04', title: 'Learn, practise and submit', body: 'Attend classes or watch recordings, complete lessons, assignments, quizzes and your final project.' },
   { number: '05', title: 'Complete and progress', body: 'Once your completion is verified you receive a certificate and become eligible for the next level.' },
@@ -84,7 +84,7 @@ export const academyFaqs = [
   },
   {
     q: 'How do I pay?',
-    a: 'After registering you can pay online by card, bank transfer or USSD through our payment provider where available, or by direct bank transfer. Course access opens only once a payment has been verified — we never grant access based on screenshots.',
+    a: 'After registering, choose your course and pay by direct bank transfer to Nexora Technologies, using the payment reference shown at checkout. Course access opens once our team has confirmed the transfer on our bank statement, usually within one working day — we never grant access based on screenshots.',
   },
   {
     q: 'Can I go straight to a higher level?',

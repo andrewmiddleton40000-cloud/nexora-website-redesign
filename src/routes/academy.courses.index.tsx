@@ -47,9 +47,9 @@ function Catalogue() {
           <div className="md:col-span-7 md:col-start-6">
             <p className="text-lg leading-relaxed text-ink-soft">To complete a course and become eligible for the next level you must:</p>
             <ol className="mt-6 space-y-4 border-t border-ink pt-6">
-              {completionRequirements.map((r, i) => (
+              {completionRequirements.map((r) => (
                 <li key={r} className="flex gap-5">
-                  <span className="text-sm tabular-nums text-muted">0{i + 1}</span>
+                  <span className="tick" aria-hidden="true">✓</span>
                   <span className="leading-relaxed">{r}</span>
                 </li>
               ))}

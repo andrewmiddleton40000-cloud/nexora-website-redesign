@@ -61,11 +61,15 @@ function Checkout() {
 
           {a.state === 'eligible' && !bankRef && (
             <>
-              <p className="text-lg leading-relaxed text-ink-soft">Choose how you would like to pay. Your course opens automatically once your payment has been verified.</p>
+              <p className="text-lg leading-relaxed text-ink-soft">
+                {d.gateways.paystack || d.gateways.flutterwave
+                  ? 'Choose how you would like to pay. Your course opens automatically once your payment has been verified.'
+                  : 'Enrolment is paid by direct bank transfer to Nexora Technologies. Get your payment reference and our account details below, then let us know once you have sent the transfer. Your course opens as soon as our team confirms it — usually within one working day.'}
+              </p>
               <div className="grid gap-3">
                 {d.gateways.paystack && <button type="button" disabled={pending} onClick={() => pay('paystack')} className="btn btn-primary justify-between">Pay online with Paystack <span className="text-sm opacity-80">Card · Bank · USSD · Transfer</span></button>}
                 {d.gateways.flutterwave && <button type="button" disabled={pending} onClick={() => pay('flutterwave')} className="btn btn-primary justify-between">Pay online with Flutterwave <span className="text-sm opacity-80">Card · Bank · USSD</span></button>}
-                {d.bank && <button type="button" disabled={pending} onClick={() => pay('bank_transfer')} className="btn btn-ghost justify-between">Pay by direct bank transfer <span className="text-sm opacity-70">Verified by our team</span></button>}
+                {d.bank && <button type="button" disabled={pending} onClick={() => pay('bank_transfer')} className={`btn justify-between ${d.gateways.paystack || d.gateways.flutterwave ? 'btn-ghost' : 'btn-primary'}`}>Pay by bank transfer <span className="text-sm opacity-80">Get account details →</span></button>}
               </div>
               {noMethods && (
                 <Alert tone="info">
@@ -102,7 +106,7 @@ function Checkout() {
         <div className="border-t border-ink pt-6">
           <p className="eyebrow">Order summary</p>
           <div className="mt-5 flex items-baseline justify-between gap-4"><span>{c.title}</span><span className="text-xl font-medium"><Price kobo={c.priceKobo} /></span></div>
-          <p className="mt-6 border-t border-line pt-4 text-sm leading-relaxed text-muted">Payments are collected directly by Nexora Technologies. Card details are handled by the payment provider and never stored by Nexora. Receipts appear in your dashboard payment history.</p>
+          <p className="mt-6 border-t border-line pt-4 text-sm leading-relaxed text-muted">Payments are made by bank transfer directly to Nexora Technologies’ business account. Always use the account shown on this page and include your payment reference. Receipts appear in your dashboard payment history once the transfer is confirmed.</p>
         </div>
       </aside>
     </section>

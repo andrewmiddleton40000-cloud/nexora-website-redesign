@@ -108,7 +108,7 @@ function CoursePage() {
 
       <section className="wrap grid gap-12 py-20 md:grid-cols-12 md:py-28">
         <div className="md:col-span-4">
-          <p className="eyebrow">(01) Overview</p>
+          <p className="eyebrow eyebrow-mark">Overview</p>
         </div>
         <div className="md:col-span-8">
           <p className="text-2xl leading-snug tracking-[-0.01em] md:text-3xl">{c.description}</p>
@@ -140,7 +140,7 @@ function CoursePage() {
         <section className="border-t border-line bg-white">
           <div className="wrap py-20 md:py-28">
             <div className="grid gap-8 md:grid-cols-12">
-              <p className="eyebrow md:col-span-4">(02) Curriculum</p>
+              <p className="eyebrow eyebrow-mark md:col-span-4">Curriculum</p>
               <h2 className="display text-4xl md:col-span-8 md:text-6xl">
                 Week by week, <span className="serif text-forest">session by session.</span>
               </h2>
@@ -205,14 +205,14 @@ function CoursePage() {
 
       <section className="wrap grid gap-12 py-20 md:grid-cols-12 md:py-28">
         <div className="md:col-span-5">
-          <p className="eyebrow">(03) Completion</p>
+          <p className="eyebrow eyebrow-mark">Completion</p>
           <h2 className="display mt-5 text-4xl md:text-5xl">
             What it takes to <span className="serif text-forest">complete.</span>
           </h2>
           <ol className="mt-8 space-y-4 border-t border-ink pt-6">
             {completionRequirements.map((r, i) => (
               <li key={r} className="flex gap-4 leading-relaxed">
-                <span className="text-sm tabular-nums text-muted">0{i + 1}</span>
+                <span className="tick" aria-hidden="true">✓</span>
                 {i === 2 ? `Achieve at least ${c.passMarkPercent}% overall across the course assessments.` : r}
               </li>
             ))}

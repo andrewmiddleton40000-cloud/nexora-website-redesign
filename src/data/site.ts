@@ -14,7 +14,11 @@ export const site = {
   phone: { display: '0902 077 4803', tel: '+2349020774803' },
   whatsapp: { display: '+234 902 077 4803', url: 'https://wa.me/2349020774803' },
   // Add verified profiles only, e.g. { label: 'LinkedIn', href: 'https://linkedin.com/company/…' }
-  socials: [] as Array<{ label: string; href: string }>,
+  socials: [
+    { label: 'YouTube', href: 'https://www.youtube.com/@nexoraacademy-t3q' },
+    { label: 'Substack', href: 'https://substack.com/@nexoratechnologies' },
+    { label: 'Telegram', href: 'https://t.me/dtruthh' },
+  ] as Array<{ label: string; href: string }>,
 }
 
 export const nav = [

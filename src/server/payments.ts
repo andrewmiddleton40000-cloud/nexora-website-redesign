@@ -6,10 +6,16 @@ import { allocateForPayment } from './finance'
 
 type Payment = typeof schema.payments.$inferSelect
 
+/**
+ * The owner chose direct bank transfer as the only payment method. Online gateways stay switched
+ * off even if their keys are configured; set this to true to offer Paystack/Flutterwave again.
+ */
+export const ONLINE_PAYMENTS_ENABLED = false
+
 export function gatewayStatus() {
   return {
-    paystack: !!process.env.PAYSTACK_SECRET_KEY,
-    flutterwave: !!process.env.FLUTTERWAVE_SECRET_KEY,
+    paystack: ONLINE_PAYMENTS_ENABLED && !!process.env.PAYSTACK_SECRET_KEY,
+    flutterwave: ONLINE_PAYMENTS_ENABLED && !!process.env.FLUTTERWAVE_SECRET_KEY,
   }
 }
 

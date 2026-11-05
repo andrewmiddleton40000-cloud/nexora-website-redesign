@@ -16,13 +16,12 @@ import { projects, type Project } from '@/data/projects'
 import { WhatsAppIcon } from './WhatsApp'
 
 export function SectionHead({
-  index,
   label,
   title,
   intro,
   tone = 'light',
 }: {
-  index: string
+  index?: string
   label: string
   title: React.ReactNode
   intro?: React.ReactNode
@@ -30,8 +29,8 @@ export function SectionHead({
 }) {
   return (
     <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-      <p className={`eyebrow md:col-span-3 md:pt-3 ${tone === 'dark' ? '!text-paper/55' : ''}`}>
-        ({index}) {label}
+      <p className={`eyebrow eyebrow-mark md:col-span-3 md:pt-3 ${tone === 'dark' ? 'eyebrow-dark !text-paper/60' : ''}`}>
+        {label}
       </p>
       <div className="md:col-span-9">
         <h2 className="display text-[2.6rem] md:text-6xl lg:text-7xl max-w-4xl">{title}</h2>
@@ -54,7 +53,9 @@ export function CategoryIndex() {
         return (
           <li key={c.id} className="group border-b border-line">
             <Link to="/services" hash={c.id} className="grid gap-4 py-8 md:grid-cols-12 md:gap-10 md:py-10">
-              <span className="text-sm text-muted tabular-nums md:col-span-1 md:pt-2">{c.number}</span>
+              <span className="md:col-span-1 md:pt-4" aria-hidden="true">
+                <span className="dot-mark" />
+              </span>
               <h3 className="display text-[1.9rem] md:col-span-5 md:text-4xl transition-colors group-hover:text-forest">
                 {c.title}
               </h3>
@@ -135,7 +136,7 @@ export function PriceList() {
       {categories.map((c) => (
         <section key={c.id} id={c.id} aria-labelledby={`${c.id}-title`}>
           <div className="grid gap-6 md:grid-cols-12 md:gap-10">
-            <p className="eyebrow md:col-span-3 md:pt-3">({c.number}) Category</p>
+            <p className="eyebrow eyebrow-mark md:col-span-3 md:pt-3">Category</p>
             <div className="md:col-span-9">
               <h3 id={`${c.id}-title`} className="display text-[2.3rem] md:text-5xl">
                 {c.title}
@@ -161,10 +162,10 @@ export function PackageGrid() {
       {packages.map((p, i) => {
         const entry = i === 0
         return (
-          <li key={p.serviceId} className="flex flex-col border-b border-r border-line bg-white p-6 md:p-8">
-            <p className="flex items-center justify-between text-sm text-muted tabular-nums">
-              0{i + 1}
-              {entry && <span className="bg-forest-tint px-2.5 py-1 text-xs text-forest">Entry-level offer</span>}
+          <li key={p.serviceId} className="lift flex flex-col border-b border-r border-line bg-white p-6 md:p-8">
+            <p className="flex min-h-[1.6rem] items-center justify-between">
+              <span className="dot-mark" aria-hidden="true" />
+              {entry && <span className="rounded-full bg-forest-tint px-3 py-1 text-xs text-forest">Entry-level offer</span>}
             </p>
             <h3 className="display mt-5 text-[2rem]">{p.title}</h3>
             <p className="mt-3 min-h-[4.5rem] leading-relaxed text-muted">{p.audience}</p>
@@ -239,10 +240,10 @@ export function Benefits({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
   const line = dark ? 'border-line-dark' : 'border-line'
   return (
     <ul className={`grid border-t md:grid-cols-2 ${dark ? 'border-line-dark' : 'border-ink'}`}>
-      {benefits.map((b, i) => (
+      {benefits.map((b) => (
         <li key={b.title} className={`border-b ${line} py-8 md:odd:pr-10 md:even:border-l md:even:pl-10`}>
-          <p className={`text-sm tabular-nums ${dark ? 'text-signal' : 'text-forest'}`}>0{i + 1}</p>
-          <h3 className="mt-3 text-2xl font-medium tracking-[-0.02em]">{b.title}</h3>
+          <span className={`dot-mark ${dark ? 'dot-mark-signal' : ''}`} aria-hidden="true" />
+          <h3 className="mt-4 text-2xl font-medium tracking-[-0.02em]">{b.title}</h3>
           <p className={`mt-3 max-w-md leading-relaxed ${dark ? 'text-paper/65' : 'text-muted'}`}>{b.body}</p>
         </li>
       ))}
@@ -254,9 +255,9 @@ export function Principles({ tone = 'dark' }: { tone?: 'light' | 'dark' }) {
   const line = tone === 'dark' ? 'border-line-dark' : 'border-line'
   return (
     <ul className={`grid border-t ${line} md:grid-cols-2 lg:grid-cols-3`}>
-      {principles.map((p, i) => (
+      {principles.map((p) => (
         <li key={p.title} className={`border-b ${line} py-8 md:pr-10`}>
-          <p className={`text-sm tabular-nums ${tone === 'dark' ? 'text-signal' : 'text-forest'}`}>0{i + 1}</p>
+          <span className={`dot-mark ${tone === 'dark' ? 'dot-mark-signal' : ''}`} aria-hidden="true" />
           <h3 className="mt-4 text-2xl font-medium tracking-[-0.02em]">{p.title}</h3>
           <p className={`mt-3 leading-relaxed ${tone === 'dark' ? 'text-paper/65' : 'text-muted'}`}>{p.body}</p>
         </li>
@@ -273,8 +274,7 @@ export function ProcessTimeline() {
       {processSteps.map((step) => (
         <li key={step.number} className="relative pl-10 pb-10 md:pl-0 md:pr-8 md:pb-0">
           <span className="absolute left-0 top-0 h-[0.85rem] w-[0.85rem] rounded-full border-2 border-forest bg-paper md:static md:block" aria-hidden="true" />
-          <p className="text-sm text-muted tabular-nums md:mt-8">{step.number}</p>
-          <h3 className="display mt-2 text-3xl md:text-[2.1rem]">{step.title}</h3>
+          <h3 className="display mt-0 md:mt-8 text-3xl md:text-[2.1rem]">{step.title}</h3>
           <p className="mt-3 leading-relaxed text-muted">{step.body}</p>
         </li>
       ))}
@@ -284,11 +284,11 @@ export function ProcessTimeline() {
 
 export function AudienceList() {
   return (
-    <ul className="flex flex-wrap gap-x-3 gap-y-2 text-xl md:text-2xl tracking-[-0.02em]">
-      {audiences.map((a, i) => (
-        <li key={a} className="flex items-center gap-3">
+    <ul className="flex flex-wrap gap-2.5">
+      {audiences.map((a) => (
+        <li key={a} className="chip">
+          <span className="h-1.5 w-1.5 rounded-full bg-forest" aria-hidden="true" />
           {a}
-          {i < audiences.length - 1 && <span className="text-forest" aria-hidden="true">/</span>}
         </li>
       ))}
     </ul>
@@ -298,7 +298,7 @@ export function AudienceList() {
 function ProjectCard({ p, large }: { p: Project; large: boolean }) {
   return (
     <li className={`group ${large ? 'md:col-span-7' : 'md:col-span-5 md:mt-24'}`}>
-      <div className={`overflow-hidden bg-paper-deep ${large ? 'aspect-[16/10]' : 'aspect-[4/3]'}`}>
+      <div className={`overflow-hidden rounded-2xl bg-paper-deep ${large ? 'aspect-[16/10]' : 'aspect-[4/3]'}`}>
         <img
           src={img(p.image, 1200)}
           srcSet={imgSet(p.image, [600, 900, 1200, 1600])}
@@ -386,12 +386,12 @@ function WorkEmptyState() {
   return (
     <div className="grid gap-10 md:grid-cols-12 md:gap-10">
       <figure className="md:col-span-7">
-        <div className="aspect-[16/10] overflow-hidden bg-paper-deep">
+        <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-paper-deep">
           <img
             src={img('hospitality.jpg', 1200)}
             srcSet={imgSet('hospitality.jpg', [600, 900, 1200, 1600])}
             sizes="(min-width: 768px) 58vw, 100vw"
-            alt="A guest receiving a room key at a boutique hotel reception, with a booking calendar on a tablet"
+            alt="A shop assistant helping a customer pay at a tablet checkout counter"
             loading="lazy"
             className="h-full w-full object-cover"
           />
