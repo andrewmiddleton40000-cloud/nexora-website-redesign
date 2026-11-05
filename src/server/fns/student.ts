@@ -136,6 +136,27 @@ export const updateProfile = createServerFn({ method: 'POST' })
     return { ok: true }
   })
 
+/** Module-by-module outline with completion ticks, used by the learning sidebar. */
+async function courseOutline(courseId: number, enrolmentId: number | null) {
+  const d = db()
+  const modules = await d.select({ id: schema.courseModules.id, week: schema.courseModules.week, title: schema.courseModules.title }).from(schema.courseModules).where(eq(schema.courseModules.courseId, courseId)).orderBy(asc(schema.courseModules.week))
+  const lessons = await d
+    .select({ id: schema.lessons.id, moduleId: schema.lessons.moduleId, title: schema.lessons.title, kind: schema.lessons.kind, durationMinutes: schema.lessons.durationMinutes, isRequired: schema.lessons.isRequired })
+    .from(schema.lessons)
+    .where(and(eq(schema.lessons.courseId, courseId), eq(schema.lessons.published, true)))
+    .orderBy(asc(schema.lessons.sortOrder))
+  const done = enrolmentId ? await d.select({ lessonId: schema.lessonProgress.lessonId }).from(schema.lessonProgress).where(eq(schema.lessonProgress.enrolmentId, enrolmentId)) : []
+  const doneIds = new Set(done.map((x) => x.lessonId))
+  const withDone = lessons.map((l) => ({ ...l, done: doneIds.has(l.id) }))
+  const groups = modules.map((m) => ({ ...m, lessons: withDone.filter((l) => l.moduleId === m.id) }))
+  const loose = withDone.filter((l) => !l.moduleId || !modules.some((m) => m.id === l.moduleId))
+  if (loose.length) groups.push({ id: 0, week: 0, title: 'More lessons', lessons: loose })
+  // "Resume": the first unfinished lesson in course order, preferring required ones.
+  const ordered = groups.flatMap((g) => g.lessons)
+  const resume = ordered.find((l) => !l.done && l.isRequired) ?? ordered.find((l) => !l.done) ?? null
+  return { modules: groups, resumeLessonId: resume?.id ?? null, completedCount: ordered.filter((l) => l.done).length, totalCount: ordered.length }
+}
+
 export const getCourseWorkspace = createServerFn({ method: 'GET' })
   .validator(z.object({ slug: z.string().min(1).max(80) }))
   .handler(async ({ data }) => {
@@ -159,10 +180,16 @@ export const getCourseWorkspace = createServerFn({ method: 'GET' })
     const progress = enrolment ? await computeProgress(enrolment) : null
     const subs = enrolment ? await d.select().from(schema.assignmentSubmissions).where(eq(schema.assignmentSubmissions.enrolmentId, enrolment.id)) : []
     const [cert] = enrolment ? await d.select({ number: schema.certificates.number }).from(schema.certificates).where(and(eq(schema.certificates.userId, u.id), eq(schema.certificates.courseId, c.id))) : []
+    const [cohort] = enrolment?.cohortId
+      ? await d.select({ name: schema.cohorts.name, startsOn: schema.cohorts.startsOn, endsOn: schema.cohorts.endsOn }).from(schema.cohorts).where(eq(schema.cohorts.id, enrolment.cohortId))
+      : []
+    const outline = await courseOutline(c.id, enrolment?.id ?? null)
     return {
       staffPreview: staff && !enrolment,
+      cohort: cohort ?? null,
+      resumeLessonId: outline.resumeLessonId,
       course: { id: c.id, slug: c.slug, title: c.title, level: c.level, passMarkPercent: c.passMarkPercent, attendanceRequirementPercent: c.attendanceRequirementPercent },
-      modules: modules.map((m) => ({ ...m, lessons: lessons.filter((l) => l.moduleId === m.id).map((l) => ({ ...l, hasVideo: !!l.hasVideo })) })),
+      modules: modules.map((m) => ({ ...m, lessons: lessons.filter((l) => l.moduleId === m.id).map((l) => ({ ...l, hasVideo: !!l.hasVideo, durationMinutes: l.durationMinutes ?? null })) })),
       assignments: assignments.map((a) => {
         const s = subs.find((x) => x.assignmentId === a.id)
         return { ...a, submission: s ? { content: s.content, linkUrl: s.linkUrl, status: s.status, score: s.score, feedback: s.feedback, submittedAt: s.submittedAt } : null }
@@ -192,7 +219,9 @@ export const getLesson = createServerFn({ method: 'GET' })
     const [done] = enrolment
       ? await d.select().from(schema.lessonProgress).where(and(eq(schema.lessonProgress.enrolmentId, enrolment.id), eq(schema.lessonProgress.lessonId, l.id)))
       : []
+    const outline = await courseOutline(l.courseId, enrolment?.id ?? null)
     return {
+      outline,
       lesson: { id: l.id, title: l.title, kind: l.kind, summary: l.summary, content: l.content, secondaryNote: l.secondaryNote, videoUrl: l.videoUrl, durationMinutes: l.durationMinutes, isLiveSession: l.isLiveSession },
       module: mod ?? null,
       course: c,

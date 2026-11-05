@@ -149,6 +149,8 @@ async function runSeed() {
         level: c.level,
         title: c.title,
         levelLabel: c.levelLabel,
+        category: c.category,
+        skills: c.skills,
         summary: c.summary,
         description: c.description,
         outcomes: c.outcomes,
@@ -194,6 +196,7 @@ async function runSeed() {
             secondaryNote: l.secondaryNote ?? null,
             durationMinutes: l.durationMinutes ?? null,
             isLiveSession: !!l.isLiveSession,
+            isPreview: !!l.isPreview,
           })
           .onConflictDoNothing()
       }

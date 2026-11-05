@@ -229,7 +229,7 @@ export const adminCourses = createServerFn({ method: 'GET' }).handler(async () =
   await requireRole(ACADEMIC)
   const d = db()
   const courses = await d.select().from(schema.courses).orderBy(asc(schema.courses.level))
-  const lessons = await d.select({ id: schema.lessons.id, courseId: schema.lessons.courseId, moduleId: schema.lessons.moduleId, sortOrder: schema.lessons.sortOrder, title: schema.lessons.title, kind: schema.lessons.kind, published: schema.lessons.published, isRequired: schema.lessons.isRequired, isLiveSession: schema.lessons.isLiveSession, hasVideo: sql<boolean>`${schema.lessons.videoUrl} is not null` }).from(schema.lessons).orderBy(asc(schema.lessons.sortOrder))
+  const lessons = await d.select({ id: schema.lessons.id, courseId: schema.lessons.courseId, moduleId: schema.lessons.moduleId, sortOrder: schema.lessons.sortOrder, title: schema.lessons.title, kind: schema.lessons.kind, published: schema.lessons.published, isRequired: schema.lessons.isRequired, isLiveSession: schema.lessons.isLiveSession, isPreview: schema.lessons.isPreview, hasVideo: sql<boolean>`${schema.lessons.videoUrl} is not null` }).from(schema.lessons).orderBy(asc(schema.lessons.sortOrder))
   const modules = await d.select().from(schema.courseModules).orderBy(asc(schema.courseModules.week))
   const assessments = await d.select({ id: schema.assessments.id, courseId: schema.assessments.courseId, title: schema.assessments.title, kind: schema.assessments.kind, weight: schema.assessments.weight, published: schema.assessments.published, questionCount: sql<number>`jsonb_array_length(${schema.assessments.questions})` }).from(schema.assessments).orderBy(asc(schema.assessments.sortOrder))
   const assignments = await d.select().from(schema.assignments).orderBy(asc(schema.assignments.sortOrder))
@@ -250,6 +250,11 @@ export const saveCourse = createServerFn({ method: 'POST' })
       level: z.number().int().min(1).max(50),
       title: z.string().trim().min(3).max(160),
       levelLabel: z.enum(['Beginner', 'Intermediate', 'Advanced']),
+      category: z.string().trim().max(80).nullable(),
+      skills: z.array(z.string().trim().min(1).max(60)).max(20),
+      instructorName: z.string().trim().max(120).nullable(),
+      instructorBio: z.string().trim().max(1500).nullable(),
+      faqs: z.array(z.object({ q: z.string().trim().min(3).max(300), a: z.string().trim().min(1).max(2000) })).max(30),
       summary: z.string().trim().min(10).max(400),
       description: z.string().trim().min(10).max(4000),
       outcomes: z.array(z.string().trim().min(2).max(300)).max(20),
@@ -281,7 +286,7 @@ export const saveCourse = createServerFn({ method: 'POST' })
       await audit(me.id, 'course.created', 'course', c.id)
       return { id: c.id }
     } catch (e) {
-      if (String(e).includes('unique')) throw new AppError('Another course already uses that slug or level number.', 'CONFLICT')
+      if (String(e).includes('unique')) throw new AppError('Another course already uses that slug.', 'CONFLICT')
       throw e
     }
   })
@@ -323,6 +328,7 @@ export const saveLesson = createServerFn({ method: 'POST' })
       isRequired: z.boolean(),
       isLiveSession: z.boolean(),
       published: z.boolean(),
+      isPreview: z.boolean(),
     }),
   )
   .handler(async ({ data }) => {

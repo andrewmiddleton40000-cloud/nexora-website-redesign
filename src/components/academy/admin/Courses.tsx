@@ -62,6 +62,11 @@ function CourseForm({ course: c, all, onDone }: { course: Course | null; all: Co
           level: Number(g('level')),
           title: g('title'),
           levelLabel: g('levelLabel') as 'Beginner',
+          category: g('category') || null,
+          skills: g('skills').split(',').map((x) => x.trim()).filter(Boolean),
+          instructorName: g('instructorName') || null,
+          instructorBio: g('instructorBio') || null,
+          faqs: parseFaqs(String(f.get('faqs') ?? '')),
           summary: g('summary'),
           description: g('description'),
           outcomes: g('outcomes').split('\n').map((x) => x.trim()).filter(Boolean),
@@ -89,6 +94,7 @@ function CourseForm({ course: c, all, onDone }: { course: Course | null; all: Co
         <L label="URL slug"><input name="slug" className={input} required pattern="[a-z0-9\-]{3,80}" defaultValue={c?.slug} /></L>
         <L label="Level number"><input name="level" type="number" min={1} className={input} required defaultValue={c?.level ?? (all.length + 1)} /></L>
         <L label="Level label"><select name="levelLabel" className={input} defaultValue={c?.levelLabel ?? 'Beginner'}>{['Beginner', 'Intermediate', 'Advanced'].map((x) => <option key={x}>{x}</option>)}</select></L>
+        <L label="Subject"><input name="category" className={input} list="course-subjects" defaultValue={c?.category ?? ''} placeholder="e.g. Artificial Intelligence" /><datalist id="course-subjects">{[...new Set(all.map((x) => x.category).filter(Boolean))].map((x) => <option key={x} value={x!} />)}</datalist></L>
         <L label="Availability"><select name="status" className={input} defaultValue={c?.status ?? 'draft'}>{['available', 'locked', 'draft', 'archived'].map((x) => <option key={x}>{x}</option>)}</select></L>
         <L label="Price (₦) — blank = not set"><input name="price" className={input} inputMode="decimal" defaultValue={c?.priceKobo != null ? String(c.priceKobo / 100) : ''} /></L>
         <L label="Duration"><input name="durationLabel" className={input} defaultValue={c?.durationLabel ?? ''} placeholder="e.g. 4 weeks" /></L>
@@ -108,12 +114,27 @@ function CourseForm({ course: c, all, onDone }: { course: Course | null; all: Co
           <L label="Audience"><input name="audience" className={input} defaultValue={c?.audience ?? ''} /></L>
           <L label="Prerequisites (shown to learners)"><input name="prerequisitesText" className={input} defaultValue={c?.prerequisitesText ?? ''} /></L>
         </div>
+        <L label="Skills you'll gain (comma separated)" className="md:col-span-4"><input name="skills" className={input} defaultValue={c?.skills.join(', ')} /></L>
+        <L label="Instructor name (leave blank to hide)" className="md:col-span-2"><input name="instructorName" className={input} defaultValue={c?.instructorName ?? ''} /></L>
+        <L label="Instructor bio" className="md:col-span-2"><textarea name="instructorBio" rows={2} className={input} defaultValue={c?.instructorBio ?? ''} /></L>
+        <L label="FAQs: question on the first line, answer below, blank line between FAQs" className="md:col-span-4"><textarea name="faqs" rows={5} className={input} defaultValue={faqsToText(c?.faqs ?? [])} /></L>
         {error && <div className="md:col-span-4"><Alert>{error}</Alert></div>}
         {saved && <div className="md:col-span-4"><Alert tone="success">Saved.</Alert></div>}
         <div className="md:col-span-4"><button className={smallPrimary} disabled={pending}>{pending ? 'Saving…' : 'Save course'}</button></div>
       </form>
     </Panel>
   )
+}
+
+function faqsToText(faqs: Array<{ q: string; a: string }>) {
+  return faqs.map((f) => `${f.q}\n${f.a}`).join('\n\n')
+}
+function parseFaqs(t: string) {
+  return t
+    .split(/\n\s*\n/)
+    .map((b) => b.split('\n').map((l) => l.trim()).filter(Boolean))
+    .filter((b) => b.length >= 2)
+    .map(([q, ...a]) => ({ q, a: a.join(' ') }))
 }
 
 function Curriculum({ course: c, onDone }: { course: Course; onDone: () => void }) {
@@ -130,7 +151,7 @@ function Curriculum({ course: c, onDone }: { course: Course; onDone: () => void 
               <ul className="mt-2 space-y-1">
                 {lessons.map((l) => (
                   <li key={l.id} className="flex items-center justify-between gap-3">
-                    <span><span className="tabular-nums text-muted">{l.sortOrder}.</span> {l.title} <span className="text-xs text-muted">· {l.kind}{l.isLiveSession ? ' · counts for attendance' : ''}{l.hasVideo ? ' · recording' : ''}{!l.published ? ' · hidden' : ''}</span></span>
+                    <span><span className="tabular-nums text-muted">{l.sortOrder}.</span> {l.title} <span className="text-xs text-muted">· {l.kind}{l.isLiveSession ? ' · counts for attendance' : ''}{l.hasVideo ? ' · recording' : ''}{l.isPreview ? ' · free preview' : ''}{!l.published ? ' · hidden' : ''}</span></span>
                     <button className="text-xs underline" onClick={() => setEditing(l.id)}>Edit</button>
                   </li>
                 ))}
@@ -187,6 +208,7 @@ function LessonForm({ course: c, lessonId, onDone }: { course: Course; lessonId:
           isRequired: f.get('isRequired') === 'on',
           isLiveSession: f.get('isLiveSession') === 'on',
           published: f.get('published') === 'on',
+          isPreview: f.get('isPreview') === 'on',
         },
       }),
     )
@@ -208,6 +230,7 @@ function LessonForm({ course: c, lessonId, onDone }: { course: Course; lessonId:
         <label className="flex items-center gap-2"><input type="checkbox" name="isRequired" defaultChecked={l?.isRequired ?? true} /> Required for completion</label>
         <label className="flex items-center gap-2"><input type="checkbox" name="isLiveSession" defaultChecked={l?.isLiveSession ?? false} /> Live session (counts towards attendance)</label>
         <label className="flex items-center gap-2"><input type="checkbox" name="published" defaultChecked={l?.published ?? true} /> Published</label>
+        <label className="flex items-center gap-2"><input type="checkbox" name="isPreview" defaultChecked={l?.isPreview ?? false} /> Free preview (anyone can read it, recording included)</label>
       </div>
       {error && <div className="md:col-span-4"><Alert>{error}</Alert></div>}
       <div className="flex gap-2 md:col-span-4"><button className={smallPrimary} disabled={pending}>Save lesson</button><button type="button" className={smallBtn} onClick={onDone}>Cancel</button></div>

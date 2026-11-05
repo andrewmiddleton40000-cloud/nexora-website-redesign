@@ -12,6 +12,8 @@ function publicCourse(c: typeof schema.courses.$inferSelect) {
     level: c.level,
     title: c.title,
     levelLabel: c.levelLabel,
+    category: c.category,
+    skills: c.skills,
     summary: c.summary,
     description: c.description,
     outcomes: c.outcomes,
@@ -23,6 +25,9 @@ function publicCourse(c: typeof schema.courses.$inferSelect) {
     status: c.status,
     image: c.image,
     passMarkPercent: c.passMarkPercent,
+    instructorName: c.instructorName,
+    instructorBio: c.instructorBio,
+    faqs: c.faqs,
   }
 }
 export type PublicCourse = ReturnType<typeof publicCourse> & { availability: Availability | null }
@@ -45,7 +50,7 @@ export const getCoursePage = createServerFn({ method: 'GET' })
     const modules = await db().select().from(schema.courseModules).where(eq(schema.courseModules.courseId, c.id)).orderBy(asc(schema.courseModules.week))
     // Syllabus only: titles and summaries. Lesson bodies and recordings are served by the access-checked getLesson.
     const lessons = await db()
-      .select({ id: schema.lessons.id, moduleId: schema.lessons.moduleId, title: schema.lessons.title, kind: schema.lessons.kind, summary: schema.lessons.summary, durationMinutes: schema.lessons.durationMinutes })
+      .select({ id: schema.lessons.id, moduleId: schema.lessons.moduleId, title: schema.lessons.title, kind: schema.lessons.kind, summary: schema.lessons.summary, durationMinutes: schema.lessons.durationMinutes, isPreview: schema.lessons.isPreview })
       .from(schema.lessons)
       .where(and(eq(schema.lessons.courseId, c.id), eq(schema.lessons.published, true)))
       .orderBy(asc(schema.lessons.sortOrder))
@@ -72,6 +77,35 @@ export const getCoursePage = createServerFn({ method: 'GET' })
       assignments,
       availability: user ? await courseAvailability(user, c) : null,
       signedIn: !!user,
+    }
+  })
+
+/** Free preview lessons: readable without an account, but only lessons staff have explicitly marked as previews. */
+export const getPreviewLesson = createServerFn({ method: 'GET' })
+  .validator(z.object({ slug: z.string().min(1).max(80), lessonId: z.number().int().positive() }))
+  .handler(async ({ data }) => {
+    await ensureSeeded()
+    const d = db()
+    const [c] = await d.select().from(schema.courses).where(eq(schema.courses.slug, data.slug))
+    if (!c || c.status === 'draft' || c.status === 'archived') return null
+    const [l] = await d
+      .select()
+      .from(schema.lessons)
+      .where(and(eq(schema.lessons.id, data.lessonId), eq(schema.lessons.courseId, c.id), eq(schema.lessons.published, true), eq(schema.lessons.isPreview, true)))
+    if (!l) return null
+    const [mod] = l.moduleId ? await d.select({ week: schema.courseModules.week, title: schema.courseModules.title }).from(schema.courseModules).where(eq(schema.courseModules.id, l.moduleId)) : []
+    const others = await d
+      .select({ id: schema.lessons.id, title: schema.lessons.title })
+      .from(schema.lessons)
+      .where(and(eq(schema.lessons.courseId, c.id), eq(schema.lessons.published, true), eq(schema.lessons.isPreview, true)))
+      .orderBy(asc(schema.lessons.sortOrder))
+    const user = await currentUser()
+    return {
+      course: publicCourse(c),
+      availability: user ? await courseAvailability(user, c) : null,
+      lesson: { id: l.id, title: l.title, kind: l.kind, summary: l.summary, content: l.content, secondaryNote: l.secondaryNote, videoUrl: l.videoUrl, durationMinutes: l.durationMinutes },
+      module: mod ?? null,
+      otherPreviews: others.filter((o) => o.id !== l.id),
     }
   })
 

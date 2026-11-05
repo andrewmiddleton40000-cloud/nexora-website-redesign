@@ -15,6 +15,8 @@ export async function loadCatalogue(): Promise<{ courses: CourseSummary[]; live:
         level: c.level,
         title: c.title,
         levelLabel: c.levelLabel,
+        category: c.category,
+        skills: c.skills,
         summary: c.summary,
         description: c.description,
         outcomes: c.outcomes,

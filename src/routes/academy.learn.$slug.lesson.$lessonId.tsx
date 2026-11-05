@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link, createFileRoute, notFound, useRouter } from '@tanstack/react-router'
 import { academySeo } from '@/lib/academy-seo'
+import { embedUrl } from '@/lib/video'
 import { requireSession } from '@/lib/guards'
 import { completeLesson, getLesson } from '@/server/fns/student'
 import { RouteError } from '@/components/academy/RouteError'
-import { Alert, RichText, useAction } from '@/components/academy/ui'
+import { Alert, ProgressBar, RichText, useAction } from '@/components/academy/ui'
 
 export const Route = createFileRoute('/academy/learn/$slug/lesson/$lessonId')({
   beforeLoad: requireSession,
@@ -18,23 +19,6 @@ export const Route = createFileRoute('/academy/learn/$slug/lesson/$lessonId')({
   component: LessonPage,
 })
 
-/** Converts common share links to embeddable players; anything else is shown as a link. */
-function embedUrl(url: string) {
-  try {
-    const u = new URL(url)
-    if (u.hostname.includes('youtube.com') && u.searchParams.get('v')) return `https://www.youtube-nocookie.com/embed/${u.searchParams.get('v')}`
-    if (u.hostname === 'youtu.be') return `https://www.youtube-nocookie.com/embed${u.pathname}`
-    if (u.hostname.includes('vimeo.com')) {
-      const id = u.pathname.split('/').filter(Boolean).pop()
-      if (id && /^\d+$/.test(id)) return `https://player.vimeo.com/video/${id}`
-    }
-    if (u.hostname === 'drive.google.com' && u.pathname.includes('/file/d/')) return url.replace(/\/view.*$/, '/preview')
-  } catch {
-    /* ignore */
-  }
-  return null
-}
-
 function LessonPage() {
   const { slug } = Route.useParams()
   const d = Route.useLoaderData()
@@ -45,7 +29,7 @@ function LessonPage() {
   const embed = l.videoUrl ? embedUrl(l.videoUrl) : null
   return (
     <article className="wrap grid gap-12 py-12 md:py-16 lg:grid-cols-12">
-      <div className="lg:col-span-8">
+      <div className="lg:col-span-8 lg:col-start-5 lg:row-start-1">
         <Link to="/academy/learn/$slug" params={{ slug }} className="text-sm text-muted hover:text-ink">← {d.course.title}</Link>
         {d.module && <p className="eyebrow mt-8">Week {d.module.week} · {d.module.title}</p>}
         <h1 className="display mt-4 text-4xl md:text-5xl">{l.title}</h1>
@@ -77,7 +61,14 @@ function LessonPage() {
         <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-ink pt-8">
           {d.canTrack &&
             (completed ? (
-              <span className="text-forest">✓ Lesson completed</span>
+              <>
+                <span className="text-forest">✓ Lesson completed</span>
+                {d.next && (
+                  <Link to="/academy/learn/$slug/lesson/$lessonId" params={{ slug, lessonId: String(d.next.id) }} className="btn btn-primary">
+                    Next lesson <span className="arrow" aria-hidden="true">→</span>
+                  </Link>
+                )}
+              </>
             ) : (
               <button
                 type="button"
@@ -86,7 +77,7 @@ function LessonPage() {
                 onClick={async () => {
                   if (await run(() => completeLesson({ data: { lessonId: l.id } }))) {
                     setCompleted(true)
-                    router.invalidate()
+                    await router.invalidate()
                   }
                 }}
               >
@@ -100,8 +91,9 @@ function LessonPage() {
           {d.next ? <Link to="/academy/learn/$slug/lesson/$lessonId" params={{ slug, lessonId: String(d.next.id) }} className="text-right hover:text-forest">{d.next.title} →</Link> : <span />}
         </nav>
       </div>
-      <aside className="text-sm leading-relaxed text-muted lg:col-span-3 lg:col-start-10">
-        <div className="border-t border-ink pt-5">
+      <aside className="lg:col-span-4 lg:row-start-1 lg:col-start-1 lg:pr-4">
+        <CourseOutline slug={slug} outline={d.outline} currentId={l.id} justCompleted={completed} />
+        <div className="mt-10 border-t border-line pt-5 text-sm leading-relaxed text-muted">
           <p className="eyebrow">Using AI safely</p>
           <ul className="mt-4 list-disc space-y-2 pl-4">
             <li>Never type passwords or personal details into AI tools.</li>
@@ -111,5 +103,58 @@ function LessonPage() {
         </div>
       </aside>
     </article>
+  )
+}
+
+type Outline = Awaited<ReturnType<typeof getLesson>>['outline']
+
+/** Coursera-style course outline: every module and lesson, with ticks and the current lesson highlighted. */
+function CourseOutline({ slug, outline, currentId, justCompleted }: { slug: string; outline: Outline; currentId: number; justCompleted: boolean }) {
+  const current = outline.modules.flatMap((m) => m.lessons).find((x) => x.id === currentId)
+  const doneCount = outline.completedCount + (justCompleted && current && !current.done ? 1 : 0)
+  const pct = outline.totalCount ? (doneCount / outline.totalCount) * 100 : 0
+  return (
+    <nav aria-label="Course outline" className="border-t border-ink pt-5 lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
+      <div className="mb-2 flex justify-between text-sm">
+        <span className="text-muted">Lessons done</span>
+        <span className="tabular-nums font-medium">
+          {doneCount}/{outline.totalCount}
+        </span>
+      </div>
+      <ProgressBar value={pct} label="Lessons completed" />
+      <ol className="mt-6 space-y-6">
+        {outline.modules.map((m) => (
+          <li key={m.id}>
+            <p className="text-xs uppercase tracking-[0.14em] text-muted">{m.week ? `Week ${m.week}` : m.title}</p>
+            {m.week ? <p className="mt-1 font-medium leading-snug">{m.title}</p> : null}
+            <ul className="mt-2 space-y-0.5 text-sm">
+              {m.lessons.map((x) => {
+                const isCurrent = x.id === currentId
+                const done = x.done || (isCurrent && justCompleted)
+                return (
+                  <li key={x.id}>
+                    <Link
+                      to="/academy/learn/$slug/lesson/$lessonId"
+                      params={{ slug, lessonId: String(x.id) }}
+                      aria-current={isCurrent ? 'page' : undefined}
+                      className={`flex items-start gap-2.5 py-1.5 pl-2 leading-snug ${isCurrent ? '-ml-px border-l-2 border-forest bg-forest-tint font-medium text-forest' : 'text-ink-soft hover:text-ink'}`}
+                    >
+                      <span className={`mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full border text-[0.55rem] ${done ? 'border-forest bg-forest text-white' : 'border-line'}`} aria-hidden="true">
+                        {done ? '✓' : ''}
+                      </span>
+                      <span>
+                        {x.title}
+                        {x.durationMinutes ? <span className="ml-1 text-xs text-muted">{x.durationMinutes} min</span> : null}
+                        <span className="sr-only">{done ? ' (completed)' : ''}</span>
+                      </span>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    </nav>
   )
 }

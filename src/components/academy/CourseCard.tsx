@@ -8,6 +8,8 @@ export type CourseSummary = {
   level: number
   title: string
   levelLabel: string
+  category?: string | null
+  skills?: string[]
   summary: string
   description?: string
   outcomes?: string[]
@@ -167,6 +169,52 @@ export function CourseRow({ c, expanded = false }: { c: CourseSummary; expanded?
           </div>
         </dl>
       </article>
+    </li>
+  )
+}
+
+/** Catalogue card: image, subject, title, skills and the facts a learner filters on. */
+export function CourseCard({ c }: { c: CourseSummary }) {
+  const label = availabilityLabel(c)
+  const locked = label.tone === 'locked'
+  const skills = c.skills ?? []
+  return (
+    <li className="group relative flex flex-col border-b border-line pb-8">
+      <div className={`aspect-[16/10] overflow-hidden rounded-2xl bg-paper-deep ${locked ? 'grayscale-[0.6]' : ''}`}>
+        {c.image && (
+          <img
+            src={img(c.image, 640)}
+            srcSet={imgSet(c.image, [360, 640, 960])}
+            sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
+          />
+        )}
+      </div>
+      <div className="mt-5 flex flex-wrap items-center gap-2">
+        <Badge tone={label.tone}>{label.text}</Badge>
+        {c.category && <span className="text-xs uppercase tracking-[0.14em] text-muted">{c.category}</span>}
+      </div>
+      <h3 className="display mt-3 text-2xl md:text-[1.9rem]">
+        <Link to="/academy/courses/$slug" params={{ slug: c.slug }} className="after:absolute after:inset-0 group-hover:text-forest">
+          {c.title}
+        </Link>
+      </h3>
+      <p className="mt-3 leading-relaxed text-ink-soft">{c.summary}</p>
+      {skills.length > 0 && (
+        <p className="mt-4 text-sm leading-relaxed text-muted">
+          <span className="font-medium text-ink">Skills you'll gain:</span> {skills.join(', ')}
+        </p>
+      )}
+      <p className="mt-auto flex items-baseline justify-between gap-4 pt-5 text-sm text-muted">
+        <span>
+          Level {c.level} · {c.levelLabel} · {c.durationLabel ?? 'Duration to be announced'}
+        </span>
+        <span className="shrink-0 font-medium text-ink">
+          <Price kobo={c.priceKobo} fallback="Price TBA" />
+        </span>
+      </p>
     </li>
   )
 }
