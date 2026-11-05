@@ -5,7 +5,6 @@ import { seo } from '@/lib/seo'
 import {
   ClosingCTA,
   FAQList,
-  PackageGrid,
   PriceList,
   PricingNote,
   ProcessTimeline,
@@ -54,7 +53,7 @@ function ServicesPage() {
           </p>
           <nav aria-label="Service categories" className="md:col-span-4 md:col-start-9">
             <ul className="flex flex-wrap gap-2 text-sm">
-              {[{ id: 'packages', title: 'Website packages' }, ...categories, { id: 'faq', title: 'Pricing questions' }].map((c) => (
+              {[...categories, { id: 'faq', title: 'Pricing questions' }].map((c) => (
                 <li key={c.id}>
                   <a href={`#${c.id}`} className="chip !py-2 !text-sm">
                     {c.title} <span className="text-forest" aria-hidden="true">↓</span>
@@ -63,27 +62,6 @@ function ServicesPage() {
               ))}
             </ul>
           </nav>
-        </div>
-      </section>
-
-
-      <section id="packages" className="border-t border-line bg-forest-tint/60 py-24 md:py-32" aria-labelledby="packages-title">
-        <div className="wrap">
-          <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-            <p className="eyebrow eyebrow-mark md:col-span-3 md:pt-3">Website packages</p>
-            <div className="md:col-span-9">
-              <h2 id="packages-title" className="display text-[2.6rem] md:text-6xl max-w-4xl">
-                Four packages. <span className="serif">Exactly what’s included.</span>
-              </h2>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-                Our most requested website projects, with their inclusions set out in full. Anything beyond the list —
-                extra pages, integrations or custom features — is scoped and priced separately.
-              </p>
-            </div>
-          </div>
-          <div className="mt-16">
-            <PackageGrid />
-          </div>
         </div>
       </section>
 

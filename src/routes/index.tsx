@@ -118,23 +118,20 @@ function Home() {
           <div className="mt-16">
             <CategoryIndex />
           </div>
+          <div className="mt-16 rounded-[1.75rem] bg-forest-tint/60 p-5 md:p-8">
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <h3 className="text-2xl font-medium tracking-[-0.02em]">Website packages</h3>
+              <p className="max-w-xl text-sm text-muted">
+                Start with a landing page and grow from there. Additional functionality is scoped and priced separately.
+              </p>
+            </div>
+            <div className="mt-8">
+              <PackageGrid />
+            </div>
+          </div>
           <Link to="/services" hash="pricing" className="link mt-10 inline-block">
             See all services and prices →
           </Link>
-        </div>
-      </section>
-
-      {/* Packages */}
-      <section className="border-t border-line bg-forest-tint/60 py-24 md:py-32" aria-label="Website packages">
-        <div className="wrap">
-          <SectionHead
-            label="Website packages"
-            title={<>Start with a landing page. <span className="serif">Grow from there.</span></>}
-            intro="Four clearly defined website packages. Additional functionality is scoped and priced separately."
-          />
-          <div className="mt-16">
-            <PackageGrid />
-          </div>
         </div>
       </section>
 
