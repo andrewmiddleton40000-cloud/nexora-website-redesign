@@ -5,7 +5,7 @@ import { academySeo } from '@/lib/academy-seo'
 import { requireSession } from '@/lib/guards'
 import { signOut } from '@/lib/auth-client'
 import { getDashboard, updateProfile } from '@/server/fns/student'
-import { roleLabels, type Role } from '@/lib/roles'
+import { ADMIN_AREA, hasRole, roleLabels, type Role } from '@/lib/roles'
 import { RouteError } from '@/components/academy/RouteError'
 import { CourseAction } from '@/components/academy/CourseCard'
 import { Alert, Badge, EmptyState, Field, Price, ProgressBar, formatDate, useAction } from '@/components/academy/ui'
@@ -32,7 +32,7 @@ function Dashboard() {
   const completed = d.enrolments.filter((e) => e.status === 'completed')
   const nextEligible = d.catalogue.find((c) => c.availability.state === 'eligible' || c.availability.state === 'payment_pending' || c.availability.state === 'needs_guardian_consent')
   const locked = d.catalogue.filter((c) => c.availability.state === 'needs_prerequisite' || c.availability.state === 'not_open' || c.availability.state === 'awaiting_price')
-  const staff = ['super_admin', 'academic_admin', 'finance_admin', 'instructor'].includes(p.role)
+  const staff = hasRole(p.role, ADMIN_AREA)
   const firstName = p.fullName.split(' ')[0]
 
   return (

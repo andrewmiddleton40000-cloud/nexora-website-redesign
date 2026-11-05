@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { AppError, audit, db, randomCode, requireRole, schema } from '../core'
 import { computeProgress } from '../learning'
 import { allocateForPayment, voidAllocationsForUserSchool } from '../finance'
-import { ACADEMIC, FINANCE, ROLES, STAFF, hasRole } from '../../lib/roles'
+import { ACADEMIC, ADMIN_AREA, FINANCE, ROLES, STAFF, hasRole } from '../../lib/roles'
 
 const id = z.number().int().positive()
 
@@ -199,7 +199,7 @@ export const addSchoolMember = createServerFn({ method: 'POST' })
     const d = db()
     const [u] = await d.select().from(schema.users).where(eq(schema.users.email, data.email.toLowerCase()))
     if (!u) throw new AppError('No Academy account uses that email. Ask the representative to register first.', 'NOT_FOUND')
-    if (hasRole(u.role, STAFF)) throw new AppError('Staff accounts cannot be school representatives.')
+    if (hasRole(u.role, ADMIN_AREA)) throw new AppError('Staff accounts cannot be school representatives.')
     const existing = await d.select().from(schema.schoolMembers).where(eq(schema.schoolMembers.userId, u.id))
     if (existing.some((m) => m.schoolId !== data.schoolId)) throw new AppError('This account already represents another school.', 'CONFLICT')
     await d

@@ -483,3 +483,38 @@ export const settings = pgTable('settings', {
   value: jsonb().$type<Record<string, unknown>>().notNull(),
   updatedAt: ts('updated_at').notNull().defaultNow(),
 })
+
+/**
+ * Blog posts, written by staff with the super_admin or editor role in the Academy admin.
+ * A post is public when status = 'published' and published_at <= now(), so a future
+ * published_at schedules it.
+ */
+export const blogPosts = pgTable(
+  'blog_posts',
+  {
+    id: serial().primaryKey(),
+    slug: text().notNull().unique(),
+    title: text().notNull(),
+    summary: text().notNull().default(''),
+    topic: text().notNull().default(''),
+    /** Markdown-style body: ## headings, lists, > quotes, **bold**, *italic*, [links](url), images, YouTube URLs. */
+    body: text().notNull().default(''),
+    /** Uploaded image key (Netlify Blobs, served at /api/blog/media/<key>) or a site photo path like 'office.jpg'. */
+    coverImage: text('cover_image'),
+    coverAlt: text('cover_alt'),
+    /** Byline shown only when entered. */
+    authorName: text('author_name'),
+    /** Pricing category id (src/data/pricing.ts) promoted at the end of the post. */
+    relatedService: text('related_service'),
+    /** Academy course slug promoted at the end of the post. */
+    relatedCourseSlug: text('related_course_slug'),
+    /** 'draft' | 'published' */
+    status: text().notNull().default('draft'),
+    publishedAt: ts('published_at'),
+    createdById: integer('created_by_id').references(() => users.id),
+    updatedById: integer('updated_by_id').references(() => users.id),
+    createdAt: created(),
+    updatedAt: ts('updated_at').notNull().defaultNow(),
+  },
+  (t) => [index('blog_posts_published_idx').on(t.status, t.publishedAt), index('blog_posts_topic_idx').on(t.topic)],
+)

@@ -13,13 +13,24 @@ import {
   SectionHead,
   WorkShowcase,
 } from '@/components/Sections'
+import { PostCard } from '@/components/Blog'
+import { latestBlogPosts } from '@/server/fns/blog'
 
 export const Route = createFileRoute('/')({
   head: () => seo({ path: '/' }),
+  loader: async () => {
+    try {
+      return { posts: await latestBlogPosts({ data: { limit: 3 } }) }
+    } catch (e) {
+      console.error('latest posts unavailable', e)
+      return { posts: [] }
+    }
+  },
   component: Home,
 })
 
 function Home() {
+  const { posts } = Route.useLoaderData()
   return (
     <>
       {/* Hero — left-aligned headline with offset photograph */}
@@ -209,6 +220,24 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {posts.length > 0 && (
+        <section className="py-24 md:py-32" aria-label="Latest from the blog">
+          <div className="wrap">
+            <SectionHead
+              label="From the blog"
+              title={<>Fresh, practical <span className="serif text-gradient pr-1">ideas.</span></>}
+              intro="New posts on websites, AI automation and business technology."
+            />
+            <ul className="mt-14 grid gap-6 md:grid-cols-3">
+              {posts.map((p) => (
+                <li key={p.slug}><PostCard p={p} headingLevel="h3" /></li>
+              ))}
+            </ul>
+            <Link to="/blog" className="link mt-12 inline-block">Read the blog →</Link>
+          </div>
+        </section>
+      )}
 
       <ClosingCTA />
     </>
