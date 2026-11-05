@@ -138,7 +138,10 @@ function ServiceRow({ s }: { s: PricedService }) {
   )
 }
 
-/** Full priced service list, grouped by category. */
+// Services already shown as a package card are not repeated in the price list.
+const packageIds = new Set(packages.map((p) => p.serviceId))
+
+/** Full priced service list, grouped by category. Package services appear once, as package cards. */
 export function PriceList() {
   return (
     <div className="space-y-24 md:space-y-32">
@@ -153,10 +156,23 @@ export function PriceList() {
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">{c.intro}</p>
             </div>
           </div>
+          {c.id === 'websites' && (
+            <div id="packages" className="mt-12 scroll-mt-24 rounded-[1.75rem] bg-forest-tint/60 p-5 md:p-8">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <h4 className="text-2xl font-medium tracking-[-0.02em]">Website packages</h4>
+                <p className="max-w-xl text-sm text-muted">Our most requested website projects, with their inclusions set out in full.</p>
+              </div>
+              <div className="mt-8">
+                <PackageGrid />
+              </div>
+            </div>
+          )}
           <ul className="mt-12 border-t border-ink">
-            {c.services.map((s) => (
-              <ServiceRow key={s.id} s={s} />
-            ))}
+            {c.services
+              .filter((s) => !packageIds.has(s.id))
+              .map((s) => (
+                <ServiceRow key={s.id} s={s} />
+              ))}
           </ul>
         </section>
       ))}
@@ -171,12 +187,12 @@ export function PackageGrid() {
       {packages.map((p, i) => {
         const entry = i === 0
         return (
-          <li key={p.serviceId} className={`card flex flex-col p-6 md:p-8 ${entry ? 'card-forest' : ''}`}>
+          <li key={p.serviceId} id={p.serviceId} className={`scroll-mt-24 card flex flex-col p-6 md:p-8 ${entry ? 'card-forest' : ''}`}>
             <p className="flex min-h-[1.6rem] items-center justify-between">
               <span className={`orb !h-8 !w-8 ${entry ? '' : 'orb-forest'}`} aria-hidden="true" />
               {entry && <span className="rounded-full bg-signal px-3 py-1 text-xs font-medium text-ink">Entry-level offer</span>}
             </p>
-            <h3 className="display mt-6 text-[2rem]">{p.title}</h3>
+            <h4 className="display mt-6 text-[2rem]">{p.title}</h4>
             <p className={`mt-3 min-h-[4.5rem] leading-relaxed ${entry ? 'text-paper/75' : 'text-muted'}`}>{p.audience}</p>
             <p className={`mt-6 text-xs uppercase tracking-[0.14em] ${entry ? 'text-paper/60' : 'text-muted'}`}>Package price</p>
             <p className={`mt-1 text-[2.1rem] font-medium tabular-nums tracking-[-0.02em] ${entry ? 'text-signal' : 'text-forest'}`}>
